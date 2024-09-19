@@ -14,9 +14,10 @@
 
   
 ```
-Mikä on nimesi?
-Pekka
-Hello Pekka!
+Anna eka luku: 1
+Anna toka luku: 4
+
+Syöttämäsi luvut: 4 ja 1
 ```
 
 > [!IMPORTANT]

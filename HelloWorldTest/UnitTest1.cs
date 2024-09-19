@@ -19,6 +19,7 @@ namespace HelloWorldTest
         [Trait("TestGroup", "NumeronvaihtoTulostaessa")]
         public void NumeronvaihtoTulostaessa(string num1, string num2)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             // Arrange
             var input = new StringReader($"{num1}\n{num2}\n"); // Simulate all user inputs
