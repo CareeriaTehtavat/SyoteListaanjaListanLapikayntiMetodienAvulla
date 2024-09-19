@@ -14,12 +14,12 @@
   
 ```
 Anna eka luku: 5
-Anna toka luku: 3
+Anna toka luku: 10
 
-Lukujen summa: 5 + 3 = 8
-Lukujen erotus: 5 - 3 = 2
-Lukujen Tulo: 5 * 3 = 15
-Lukujen Osamäärä: 5 / 3 = 1,6666666666666667
+Lukujen Summa: 5 + 10 = 15
+Lukujen Erotus: 5 - 10 = -5
+Lukujen Tulo: 5 * 10 = 50
+Lukujen Osamäärä: 5 / 10 = 0,5
 ```
 
 > [!IMPORTANT]

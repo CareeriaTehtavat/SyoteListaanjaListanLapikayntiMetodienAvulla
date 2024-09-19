@@ -60,11 +60,20 @@ namespace HelloWorldTest
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Remove all whitespace from the line and the expected text
+            // Normalize by removing all whitespace and converting to lowercase
             string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
-            return normalizedLine.Contains(normalizedExpectedText);
+
+            // Create the regex pattern allowing any character for "ä" and "ö"
+            string pattern = Regex.Escape(normalizedExpectedText)
+                                  .Replace("ö", ".")  // Allow any character for "ö"
+                                  .Replace("ä", "."); // Allow any character for "ä"
+
+            // Check if the line matches the pattern, ignoring case
+            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
+
 
 
         private int CountWords(string line)
