@@ -14,7 +14,7 @@ namespace HelloWorldTest
         [InlineData("20", "Olet aikuinen.")]
         [InlineData("16", "Olet teini.")]
         [InlineData("30", "Olet aikuinen.")]
-        [Trait("TestGroup", "AgeCategorization")]
+        [Trait("TestGroup", "AgeCategorizationTest")]
         public void AgeCategorizationTest(string inputAge, string expectedOutput)
         {
             // Arrange
