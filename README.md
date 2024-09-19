@@ -1,14 +1,13 @@
-# Hello nimi! (vol2) 
+# Hello nimi! (vol3) 
 
 ## JOHDANTO
 - Kertaa "Hello World" ja "Hello Nimi" sovelluksien toiminnot ensin
 ## TEHTÄVÄNANTO
-- Tee konsolisovellus, jossa on yksi muuttuja ja konsoliin tulostavat "write line" sekä "read line" toiminnot.
-- Muuttuja: on tyypiltään String ja nimeltään nimi. Arvonsa puolesta se on alustamaton.
-- Luo sovellukseen ensin nimi-muuttuja ja sitten write line, jossa kysytään käyttäjän nimeä. "Mikä on nimesi?"
-- Aseta nimi-muuttuja saamaan arvonsa readline-toiminnolla.
-- Laita sovellus tulostamaan write line toiminnolla "Hello nimi!"
+- Jatka edellistä tehtävää siten, että käyttäjältä kysytään nimen lisäksi myös kotikaupunki ja ikä. 
+- Luo kaksi muuttujaa lisää, nimeltä string kotikaupunki ja int ikä.
+- Lopuksi tulosta yhdelle Console.WriteLinellä käyttäjän syötteen mukaiset tiedot
 - Tuloste, joka näkyy käyttäjälle konsolissa, kun ohjelma ajetaan:
+
   
 ```
 Mikä on nimesi?
