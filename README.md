@@ -1,25 +1,39 @@
-# Peruslaskut numeromuuttujilla (vol2)
+# Kuvioita ja muotoja
 
 ## JOHDANTO
-- Kertaa Peruslaskut numeromuuttujilla tehtävän koodin toiminta
 - Tarkasta miten syötteen lisääminen muuttujaan tapahtui edellisissä tehtävissä
+- Piirtelyä harjoituksesta voi olla apua
+- Console.Write ja Console.WriteLine toiminnoissa voit lisätä ylimääräisiä rivivaihtoja, mikäli niille on tarvetta käyttämällä merkkiparia \n
+	- \n tulee olla hipsujen " " sisällä ja aivan toiminnon alussa
 ## TEHTÄVÄNANTO
-- Alusta aluksi kaksi tyhjää desimaalimuuttujaa - luku1 ja luku2 (double tai float)
-- Alusta lisäksi desimaalimuuttujat summa, erotus, tulo ja osamäärä
-- Pyydä käyttäjältä Writen ja Readlinen avulla kahta lukua, sijoita ne luku1 ja luku2 arvoiksi
-- Laita sovellus laskemaan lukujen summa, erotus, tulo ja osamäärä aiemmin alustamiisi muuttujiin
-- Tulosta konsoliin allaolevan mallin mukaisesti laskutoimitukset käyttäen jälleen lukujen tulostamiseen vain ja ainoastaan muuttujia
+- Pyydä käyttäjää syöttämään luku, jonka talletat int tyyppiseen kokonaislukumuuttujaan (writeline, readline..)
+- Tulosta syötetty luku viidesti yhdelle riville putkeen, sitten seuraavalle riville välilyöntien kanssa kolme kertaa ja vielä seuraavalla riville viidesti putkeen (ks. kuva alla - harjoitus jatkuu vielä kuvan jälkeen)
+```
+Anna luku: 3
 
+33333
+3 3 3
+33333
+```
+
+- Nyt pyydä käyttäjältä vielä kaksi lukua ja laita ne tulostumaan alla olevan kuvan mukaisesti (huomioi rivinvaihdot, välit...)
 
   
 ```
-Anna eka luku: 5
-Anna toka luku: 10
+Anna luku: 3
 
-Lukujen Summa: 5 + 10 = 15
-Lukujen Erotus: 5 - 10 = -5
-Lukujen Tulo: 5 * 10 = 50
-Lukujen Osamäärä: 5 / 10 = 0,5
+33333
+3 3 3
+33333
+
+Anna toinen luku: 2
+Anna vielä kolmas luku: 1
+
+3 2 1
+3
+2
+1
+1 2 3
 ```
 
 > [!IMPORTANT]

@@ -1,3 +1,4 @@
+
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -7,17 +8,15 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-
         [Theory]
-        [InlineData("5", "3")]
-        [InlineData("10", "2")]
-        [InlineData("7", "2")]
-        [InlineData("8", "4")]
-        [Trait("TestGroup", "ArithmeticOperations")]
-        public void ArithmeticOperations(string num1, string num2)
+        [InlineData("2", "7", "8",
+            "Anna luku: \n22222\n2 2 2\n22222\n\nAnna toinen luku: Anna viel‰ kolmas luku: \n2 7 8\n2\n7\n8\n8 7 2")]
+        [InlineData("5", "3", "1",
+            "Anna luku: \n55555\n5 5 5\n55555\n\nAnna toinen luku: Anna viel‰ kolmas luku: \n5 3 1\n5\n3\n1\n1 3 5")]
+        public void KuvioitaJaMuotoja(string luku1, string luku2, string luku3, string expectedOutput)
         {
             // Arrange
-            var input = new StringReader($"{num1}\n{num2}\n"); // Simulate user inputs
+            var input = new StringReader($"{luku1}\n{luku2}\n{luku3}\n"); // Simulate user inputs
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -26,45 +25,30 @@ namespace HelloWorldTest
             // Act
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
-            // Get the console output
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            // Get and normalize the console output
+            var result = NormalizeOutput(sw.ToString());
 
-            // Calculate expected values
-            int luku1 = Int32.Parse(num1);
-            int luku2 = Int32.Parse(num2);
-            int summa = luku1 + luku2;
-            int erotus = luku1 - luku2;
-            int tulo = luku1 * luku2;
-            int osamaara = luku1 / luku2;
+            // Normalize the expected output
+            var expected = NormalizeOutput(expectedOutput);
 
-            // Prepare expected output
-            var expectedOutput = new List<string>
-    {
-        $"Lukujen Summa: {luku1} + {luku2} = {summa}",
-        $"Lukujen Erotus: {luku1} - {luku2} = {erotus}",
-        $"Lukujen Tulo: {luku1} * {luku2} = {tulo}",
-        $"Lukujen Osam‰‰r‰: {luku1} / {luku2} = {osamaara}"
-    };
-
-            // Adjust the output indices (skip prompt lines)
-            int outputStartIndex = 1; // Adjust based on actual output
-
-            // Assert that each line of output matches the expected arithmetic results
-            for (int i = 0; i < expectedOutput.Count; i++)
-            {
-                Assert.True(LineContainsIgnoreSpaces(result[outputStartIndex + i], expectedOutput[i]),
-                    $"Expected: {expectedOutput[i]} but got: {result[outputStartIndex + i]}");
-            }
+            // Assert
+            Assert.True(LineContainsIgnoreSpaces(result, expected),
+                $"Expected: {expectedOutput} but got: {sw.ToString()}");
         }
 
+        private string NormalizeOutput(string output)
+        {
+            // Remove all whitespace and convert to lowercase
+            return Regex.Replace(output, @"\s+", "").ToLower();
+        }
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Normalize by removing all whitespace and converting to lowercase
+            // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
 
-            // Create the regex pattern allowing any character for "‰" and "ˆ"
+            // Create a regex pattern to allow any character for "‰" and "ˆ"
             string pattern = Regex.Escape(normalizedExpectedText)
                                   .Replace("ˆ", ".")  // Allow any character for "ˆ"
                                   .Replace("‰", "."); // Allow any character for "‰"
@@ -72,8 +56,6 @@ namespace HelloWorldTest
             // Check if the line matches the pattern, ignoring case
             return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
-
-
 
 
         private int CountWords(string line)
