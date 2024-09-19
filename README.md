@@ -1,31 +1,25 @@
-# Kertotaulu
+# Peruslaskut numeromuuttujilla (vol2)
 
 ## JOHDANTO
-- Kertaa muuttujatyyppeihin liittyvät materiaalit
+- Kertaa Peruslaskut numeromuuttujilla tehtävän koodin toiminta
 - Tarkasta miten syötteen lisääminen muuttujaan tapahtui edellisissä tehtävissä
 ## TEHTÄVÄNANTO
-- Tarvitset yhden numeromuuttujan
-- Tee WriteLine tai Write toiminto, joka pyytää käyttäjää antamaan luvun ja talleta se ReadLine toiminnolla aiemmin luomaasi numeromuuttujaan
-- Laita konsolisovellus pyytämään käyttäjältä lukua siten, että käyttäjä kirjoittaa sen samalle riville kuin millä sitä kysytään
-- Laita konsolisovellus tulostamaan tyhjän rivin jälkeen ensin rivi, jolla konsoli kertoo minkä luvun kertotaulua alkaa tulostamaan ja sen jälkeen rivi riviltä kyseisen luvun kertotaulun kymmeneen asti
-- Esimerkkituloste alla:
+- Alusta aluksi kaksi tyhjää desimaalimuuttujaa - luku1 ja luku2 (double tai float)
+- Alusta lisäksi desimaalimuuttujat summa, erotus, tulo ja osamäärä
+- Pyydä käyttäjältä Writen ja Readlinen avulla kahta lukua, sijoita ne luku1 ja luku2 arvoiksi
+- Laita sovellus laskemaan lukujen summa, erotus, tulo ja osamäärä aiemmin alustamiisi muuttujiin
+- Tulosta konsoliin allaolevan mallin mukaisesti laskutoimitukset käyttäen jälleen lukujen tulostamiseen vain ja ainoastaan muuttujia
 
 
   
 ```
-Syötä valitsemasi luku: 4
+Anna eka luku: 5
+Anna toka luku: 3
 
-Antamasi luvun (4) kertotaulu:
-4 * 1  = 4
-4 * 2  = 8
-4 * 3  = 12
-4 * 4  = 16
-4 * 5  = 20
-4 * 6  = 24
-4 * 7  = 28
-4 * 8  = 32
-4 * 9  = 36
-4 * 10  = 40
+Lukujen summa: 5 + 3 = 8
+Lukujen erotus: 5 - 3 = 2
+Lukujen Tulo: 5 * 3 = 15
+Lukujen Osamäärä: 5 / 3 = 1,6666666666666667
 ```
 
 > [!IMPORTANT]

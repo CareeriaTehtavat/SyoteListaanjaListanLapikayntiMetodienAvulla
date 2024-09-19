@@ -1,4 +1,3 @@
-
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -10,15 +9,15 @@ namespace HelloWorldTest
     {
 
         [Theory]
-        [InlineData("2")]
-        [InlineData("16")]
-        [InlineData("3332")]
-        [InlineData("102")]
-        [Trait("TestGroup", "Kertotaulu")]
-        public void Kertotaulu(string inputNumber)
+        [InlineData("5", "3")]
+        [InlineData("10", "2")]
+        [InlineData("7", "2")]
+        [InlineData("8", "4")]
+        [Trait("TestGroup", "ArithmeticOperations")]
+        public void ArithmeticOperations(string num1, string num2)
         {
             // Arrange
-            var input = new StringReader(inputNumber); // Simulate user input for the number
+            var input = new StringReader($"{num1}\n{num2}\n"); // Simulate user inputs
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -30,41 +29,43 @@ namespace HelloWorldTest
             // Get the console output
             var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            // Prepare expected multiplication table output
-            int number = int.Parse(inputNumber);
+            // Calculate expected values
+            int luku1 = Int32.Parse(num1);
+            int luku2 = Int32.Parse(num2);
+            int summa = luku1 + luku2;
+            int erotus = luku1 - luku2;
+            int tulo = luku1 * luku2;
+            int osamaara = luku1 / luku2;
+
+            // Prepare expected output
             var expectedOutput = new List<string>
     {
-        $"Antamasi luvun ({number}) kertotaulu:",
-        $"{number} * 1  = {number * 1}",
-        $"{number} * 2  = {number * 2}",
-        $"{number} * 3  = {number * 3}",
-        $"{number} * 4  = {number * 4}",
-        $"{number} * 5  = {number * 5}",
-        $"{number} * 6  = {number * 6}",
-        $"{number} * 7  = {number * 7}",
-        $"{number} * 8  = {number * 8}",
-        $"{number} * 9  = {number * 9}",
-        $"{number} * 10 = {number * 10}"
+        $"Lukujen Summa: {luku1} + {luku2} = {summa}",
+        $"Lukujen Erotus: {luku1} - {luku2} = {erotus}",
+        $"Lukujen Tulo: {luku1} * {luku2} = {tulo}",
+        $"Lukujen Osamäärä: {luku1} / {luku2} = {osamaara}"
     };
 
-            // Assert that the correct prompt is shown
-            Assert.False(string.IsNullOrEmpty(result[0]), "The first line should not be null or empty.");
-            //Assert.True(LineContainsIgnoreSpaces(result[0], "Syötä valitsemasi luku:"), "The prompt message did not match.");
+            // Adjust the output indices (skip prompt lines)
+            int outputStartIndex = 1; // Adjust based on actual output
 
-            // Assert that each line of output matches the expected multiplication table
-            for (int i = 1; i < expectedOutput.Count + 1; i++) // Starting from line 1 as the first line is the prompt
+            // Assert that each line of output matches the expected arithmetic results
+            for (int i = 0; i < expectedOutput.Count; i++)
             {
-                Assert.True(LineContainsIgnoreSpaces(result[i], expectedOutput[i - 1]),
-                    $"Expected: {expectedOutput[i - 1]} but got: {result[i]}");
+                Assert.True(LineContainsIgnoreSpaces(result[outputStartIndex + i], expectedOutput[i]),
+                    $"Expected: {expectedOutput[i]} but got: {result[outputStartIndex + i]}");
             }
         }
+
+
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace from the line and the expected text
-            string normalizedLine = Regex.Replace(line, @"\s+", "");
-            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "");
+            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
+            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
             return normalizedLine.Contains(normalizedExpectedText);
         }
+
 
         private int CountWords(string line)
         {
