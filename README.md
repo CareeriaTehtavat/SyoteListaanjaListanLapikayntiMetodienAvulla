@@ -1,19 +1,19 @@
-# Tekstistä lukuun ja keskiarvo
+# Hello nimi! (vol2) 
 
 ## JOHDANTO
-- Hyödynnä aina aiemmin oppimaasi.
-- Muista: Numeromuuttuja ei voi sisältää tekstiä, pelkästään numeroita.
-- Muista: Tekstimuuttujan täytyy aina olla hipsujen " " sisällä.
-- Toiminnot double.Parse(); sekä float.Parse(); muuttavat muuttujan arvon desimaalilukumuotoon
+- Kertaa "Hello World" ja "Hello Nimi" sovelluksien toiminnot ensin
 ## TEHTÄVÄNANTO
-- Tee konsolisovellus, jossa on kolme tekstimuuttujaa, "10,4", "8,2" ja "5,1".
-- Muunna tekstimuuttujat Parse toiminnolla joko double tai float muotoon (tarvitset siis float/double lukumuuttujat muunnoksille)
-- Laita konsolisovellus laskemaan lukujen keskiarvo
-- Tulosta konsoliin allaolevan kuvan mukainen tuloste käyttäen lukujen tulostamiseen vain muuttujia.
-- Muista kommentoida koodiin, mitä siinä tapahtuu.
+- Tee konsolisovellus, jossa on yksi muuttuja ja konsoliin tulostavat "write line" sekä "read line" toiminnot.
+- Muuttuja: on tyypiltään String ja nimeltään nimi. Arvonsa puolesta se on alustamaton.
+- Luo sovellukseen ensin nimi-muuttuja ja sitten write line, jossa kysytään käyttäjän nimeä. "Mikä on nimesi?"
+- Aseta nimi-muuttuja saamaan arvonsa readline-toiminnolla.
+- Laita sovellus tulostamaan write line toiminnolla "Hello nimi!"
+- Tuloste, joka näkyy käyttäjälle konsolissa, kun ohjelma ajetaan:
   
 ```
-Tekstinä syötettyjen lukujen 10,4 8,2 ja 5,1 keskiarvo on 7,900000000000001
+Mikä on nimesi?
+Pekka
+Hello Pekka!
 ```
 
 > [!IMPORTANT]

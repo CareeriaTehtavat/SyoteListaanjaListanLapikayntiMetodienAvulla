@@ -9,61 +9,29 @@ namespace HelloWorldTest
     {
 
 
-        //Harjoitus - PeruslaskutNumeromuuttujilla
-        [Fact]
-        [Trait("TestGroup", "TekstistaLukuunKeskiarvo")]
-        public void TekstistaLukuunKeskiarvo()
+        [Theory]
+        [InlineData("Ossi", "Hello Ossi!")]
+        [InlineData("Anna", "Hello Anna!")]
+        [InlineData("John", "Hello John!")]
+        [Trait("TestGroup", "HelloNimi2")]
+        public void HelloNimi2(string inputName, string expectedOutput)
         {
             // Arrange
+            var input = new StringReader(inputName);
+            Console.SetIn(input); // Simulate user input
+
             using var sw = new StringWriter();
-            Console.SetOut(sw);
+            Console.SetOut(sw); // Capture console output
 
+            // Act
+            HelloWorld.Program.Main(new string[0]); // Run the Main method
 
-            // Set a timeout of 30 seconds for the test execution
-            var cancellationTokenSource = new CancellationTokenSource();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+            // Get the console output
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            try
-            {
-                // Act
-                Task task = Task.Run(() =>
-                {
-                    // Run the program
-                    HelloWorld.Program.Main(new string[0]);
-                }, cancellationTokenSource.Token);
-
-                task.Wait(cancellationTokenSource.Token);  // Wait for the task to complete or timeout
-
-                // Get the output that was written to the console
-                var result = sw.ToString().TrimEnd(); // Trim only the end of the string
-                var resultLines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-                // Define a regex pattern to match the structure, ignoring specific values
-                string teksti1 = "10,4";
-                string teksti2 = "8,2";
-                string teksti3 = "5,1";
-
-                double luku1 = Convert.ToDouble(teksti1);
-                double luku2 = Convert.ToDouble(teksti2);
-                double luku3 = Convert.ToDouble(teksti3);
-
-                double keskiarvo = (luku1 + luku2 + luku3) / 3;
-
-
-                // Assert: Check if the result matches the expected structure
-                Assert.True(LineContainsIgnoreSpaces(resultLines[0], "Tekstinä syötettyjen lukujen " + teksti1 + " " + teksti2 + " ja " + teksti3 + " keskiarvo on " + keskiarvo), "Line does not contain expected text: " + resultLines[0] + ", expected text: " + "11");
-            }
-            catch (OperationCanceledException)
-            {
-                Assert.True(false, "The operation was canceled due to timeout.");
-            }
-            catch (AggregateException ex) when (ex.InnerException is OperationCanceledException)
-            {
-                Assert.True(false, "The operation was canceled due to timeout.");
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
-            }
+            // Assert
+            Assert.Equal("Mikä on nimesi?", result[0]); // Check the prompt message
+            Assert.True(LineContainsIgnoreSpaces(result[1], expectedOutput), "Expected: " + expectedOutput + "\n In Console: " + result[1]);    // Check the greeting message
         }
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
@@ -98,6 +66,3 @@ namespace HelloWorldTest
 
     }
 }
-
-
-
