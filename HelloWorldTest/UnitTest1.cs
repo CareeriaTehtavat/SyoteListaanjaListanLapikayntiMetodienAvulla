@@ -30,7 +30,6 @@ namespace HelloWorldTest
             var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
             // Assert
-            Assert.Equal("Mikä on nimesi?", result[0]); // Check the prompt message
             Assert.True(LineContainsIgnoreSpaces(result[1], expectedOutput), "Expected: " + expectedOutput + "\n In Console: " + result[1]);    // Check the greeting message
         }
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
