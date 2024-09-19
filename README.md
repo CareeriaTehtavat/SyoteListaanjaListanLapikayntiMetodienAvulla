@@ -1,39 +1,23 @@
 # Kuvioita ja muotoja
 
 ## JOHDANTO
-- Tarkasta miten syötteen lisääminen muuttujaan tapahtui edellisissä tehtävissä
-- Piirtelyä harjoituksesta voi olla apua
-- Console.Write ja Console.WriteLine toiminnoissa voit lisätä ylimääräisiä rivivaihtoja, mikäli niille on tarvetta käyttämällä merkkiparia \n
-	- \n tulee olla hipsujen " " sisällä ja aivan toiminnon alussa
+- Muista aina hyödyntää jo aiemmin oppimaasi!
+- Muista: Numeromuuttuja ei voi sisältää tekstiä, pelkästään numeroita ja samalla tekstimuuttuja voi olla mitä tahansa merkkejä, mutta vain numeroita käyttävää tekstimuuttuja ei voi käyttää matemaattisiin toimintoihin, ellei sitä ensin muunna numeromuuttujatyyppiin.
+- Console.Write(); kirjoittaa tulosteen konsoliin ja jatkaa seuraavaa tulostetta samalta riviltä
+- Console.WriteLine(); kirjoittaa tulosteen konsoliin ja ohjaa seuraavan tulosteen alkamaan seuraavalta riviltä
+- Console.ReadLine(); poimii käyttäjän syötteen String-muotoisena muuttujaan, jos syöte ei ole tekstiä se täytyy muistaa muuntaa numeromuotoon joko Convert.ToInt32(); tai int.Parse(); toiminnolla. 
+- Katso myös ensin if-else kirjallinen materiaali!
+- ehto - kyllä - ei ; ensimmäisten aaltosulkeiden sisällä on koodi mikä ajetaan mikäli ehto on totta, elsen jälkeen tulevien aaltosulkeiden sisällä on koodi mikä ajetaan jos ehto ei ole totta, eli kaikki muut tapaukset paitsi tosiehdon (tai ehtojen) tapaus toteuttaa elsen koodin. 
 ## TEHTÄVÄNANTO
-- Pyydä käyttäjää syöttämään luku, jonka talletat int tyyppiseen kokonaislukumuuttujaan (writeline, readline..)
-- Tulosta syötetty luku viidesti yhdelle riville putkeen, sitten seuraavalle riville välilyöntien kanssa kolme kertaa ja vielä seuraavalla riville viidesti putkeen (ks. kuva alla - harjoitus jatkuu vielä kuvan jälkeen)
-```
-Anna luku: 3
-
-33333
-3 3 3
-33333
-```
-
-- Nyt pyydä käyttäjältä vielä kaksi lukua ja laita ne tulostumaan alla olevan kuvan mukaisesti (huomioi rivinvaihdot, välit...)
-
+- Tarvitset konsolisovellukseen ika muuttujan, joka on muuttujatyypiltään int - eli kokonaisluku.   
+- Laita konsolisovellus pyytämään käyttäjää syöttämään konsoliin ikänsä, talleta syötetty ikä ika-muuttujaan.
+- Tarkista iän kysymisen jälkeen if-else lauseen avulla onko käyttäjä lapsi (alle 10 vuotta), teini (alle 18 vuotta) vai aikuinen (yli 18 vuotta). 
+- Muista: toiminto lohkon sisällä päätetään puolipisteeseen (esim WriteLine();), jokainen ehtolohko on omien aaltosulkeiden { } sisällä, ehdon päätteeksi ei tule puolipistettä, koska ehto ei ole toiminto 
+- Esimerkkituloste:
   
 ```
-Anna luku: 3
-
-33333
-3 3 3
-33333
-
-Anna toinen luku: 2
-Anna vielä kolmas luku: 1
-
-3 2 1
-3
-2
-1
-1 2 3
+Syötä ikäsi: 19
+olet aikuinen.
 ```
 
 > [!IMPORTANT]
