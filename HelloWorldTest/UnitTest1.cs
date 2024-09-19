@@ -33,7 +33,8 @@ namespace HelloWorldTest
 
             // Get the console output
             var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            string expectedOut = $"Syöttämäsi luvut: {num2} ja {num1}";
+            string expectedOut = "Sy"+'ö'+"tt"+'ä'+"m" + 'ä' +"si luvut: " + $"{num2} ja {num1}";
+
             // Assert
             Assert.False(string.IsNullOrEmpty(result[0]), "The first line should not be null or empty.");
             Assert.True(LineContainsIgnoreSpaces(result[1], expectedOut), "Expected: " + expectedOut + "\n In Console: " + result[1]);    // Check the greeting message
