@@ -13,6 +13,7 @@ namespace HelloWorldTest
             "Anna luku: \n22222\n2 2 2\n22222\n\nAnna toinen luku: Anna vielä kolmas luku: \n2 7 8\n2\n7\n8\n8 7 2")]
         [InlineData("5", "3", "1",
             "Anna luku: \n55555\n5 5 5\n55555\n\nAnna toinen luku: Anna vielä kolmas luku: \n5 3 1\n5\n3\n1\n1 3 5")]
+        [Trait("TestGroup", "KuvioitaJaMuotoja")]
         public void KuvioitaJaMuotoja(string luku1, string luku2, string luku3, string expectedOutput)
         {
             // Arrange
