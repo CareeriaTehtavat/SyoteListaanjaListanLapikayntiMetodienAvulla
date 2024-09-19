@@ -1,23 +1,31 @@
-# Numeronvaihto tulostaessa
+# Kertotaulu
 
 ## JOHDANTO
 - Kertaa muuttujatyyppeihin liittyvät materiaalit
 - Tarkasta miten syötteen lisääminen muuttujaan tapahtui edellisissä tehtävissä
-- ReadLine laajempi esimerkki (materiaaleista) johdattaa jäljille...
 ## TEHTÄVÄNANTO
-- Alusta aluksi kaksi tyhjää numeromuuttujaa - luku1 ja luku2
-- Käytä avuksesi Write, WriteLine ja ReadLine toimintoja
-- Laita konsolisovellus pyytämään käyttäjältä ensimmäistä lukua (luku1) siten, että käyttäjä kirjoittaa sen samalle riville kuin millä sitä kysytään
-- Laita konsolisovellus pyytämään käyttäjältä toista lukua (luku2) siten, että käyttäjä kirjoittaa sen samalle riville kuin millä sitä kysytään
-- Tyhjän rivin jälkeen tulee tuloste, jossa luvut ovat vaihtaneet paikkaa - tee se. Alla kaksi esimerkkiä konsolista:
-	- oikea tuloste syntyy tämänkaltaisella lauseella: syöttämäsi luvut: luku2 ja luku1
+- Tarvitset yhden numeromuuttujan
+- Tee WriteLine tai Write toiminto, joka pyytää käyttäjää antamaan luvun ja talleta se ReadLine toiminnolla aiemmin luomaasi numeromuuttujaan
+- Laita konsolisovellus pyytämään käyttäjältä lukua siten, että käyttäjä kirjoittaa sen samalle riville kuin millä sitä kysytään
+- Laita konsolisovellus tulostamaan tyhjän rivin jälkeen ensin rivi, jolla konsoli kertoo minkä luvun kertotaulua alkaa tulostamaan ja sen jälkeen rivi riviltä kyseisen luvun kertotaulun kymmeneen asti
+- Esimerkkituloste alla:
+
 
   
 ```
-Anna eka luku: 1
-Anna toka luku: 4
+Syötä valitsemasi luku: 4
 
-Syöttämäsi luvut: 4 ja 1
+Antamasi luvun (4) kertotaulu:
+4 * 1  = 4
+4 * 2  = 8
+4 * 3  = 12
+4 * 4  = 16
+4 * 5  = 20
+4 * 6  = 24
+4 * 7  = 28
+4 * 8  = 32
+4 * 9  = 36
+4 * 10  = 40
 ```
 
 > [!IMPORTANT]
