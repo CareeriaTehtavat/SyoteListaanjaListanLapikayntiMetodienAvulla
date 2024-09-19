@@ -1,12 +1,16 @@
-# Hello nimi! (vol3) 
+# Numeronvaihto tulostaessa
 
 ## JOHDANTO
-- Kertaa "Hello World" ja "Hello Nimi" sovelluksien toiminnot ensin
+- Kertaa muuttujatyyppeihin liittyvät materiaalit
+- Tarkasta miten syötteen lisääminen muuttujaan tapahtui edellisissä tehtävissä
+- ReadLine laajempi esimerkki (materiaaleista) johdattaa jäljille...
 ## TEHTÄVÄNANTO
-- Jatka edellistä tehtävää siten, että käyttäjältä kysytään nimen lisäksi myös kotikaupunki ja ikä. 
-- Luo kaksi muuttujaa lisää, nimeltä string kotikaupunki ja int ikä.
-- Lopuksi tulosta yhdelle Console.WriteLinellä käyttäjän syötteen mukaiset tiedot
-- Tuloste, joka näkyy käyttäjälle konsolissa, kun ohjelma ajetaan:
+- Alusta aluksi kaksi tyhjää numeromuuttujaa - luku1 ja luku2
+- Käytä avuksesi Write, WriteLine ja ReadLine toimintoja
+- Laita konsolisovellus pyytämään käyttäjältä ensimmäistä lukua (luku1) siten, että käyttäjä kirjoittaa sen samalle riville kuin millä sitä kysytään
+- Laita konsolisovellus pyytämään käyttäjältä toista lukua (luku2) siten, että käyttäjä kirjoittaa sen samalle riville kuin millä sitä kysytään
+- Tyhjän rivin jälkeen tulee tuloste, jossa luvut ovat vaihtaneet paikkaa - tee se. Alla kaksi esimerkkiä konsolista:
+	- oikea tuloste syntyy tämänkaltaisella lauseella: syöttämäsi luvut: luku2 ja luku1
 
   
 ```

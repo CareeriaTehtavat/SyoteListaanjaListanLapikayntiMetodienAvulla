@@ -1,3 +1,4 @@
+
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -10,22 +11,17 @@ namespace HelloWorldTest
 
 
         [Theory]
-        [InlineData("Ossi", "22", "Helsinki", "Nimesi on Ossi, ja olet 22 vuotta vanha. Kotikaupunki: Helsinki")]
-        [InlineData("Anna", "30", "Tampere", "Nimesi on Anna, ja olet 30 vuotta vanha. Kotikaupunki: Tampere")]
-        [InlineData("John", "45", "New York", "Nimesi on John, ja olet 45 vuotta vanha. Kotikaupunki: New York")]
-        [InlineData("Maria", "29", "Espoo", "Nimesi on Maria, ja olet 29 vuotta vanha. Kotikaupunki: Espoo")]
-        [InlineData("Kalle", "18", "Turku", "Nimesi on Kalle, ja olet 18 vuotta vanha. Kotikaupunki: Turku")]
-        [InlineData("Liisa", "35", "Oulu", "Nimesi on Liisa, ja olet 35 vuotta vanha. Kotikaupunki: Oulu")]
-        [InlineData("Pedro", "27", "Madrid", "Nimesi on Pedro, ja olet 27 vuotta vanha. Kotikaupunki: Madrid")]
-        [InlineData("Sophie", "19", "Paris", "Nimesi on Sophie, ja olet 19 vuotta vanha. Kotikaupunki: Paris")]
-        [InlineData("Mikko", "50", "Jyväskylä", "Nimesi on Mikko, ja olet 50 vuotta vanha. Kotikaupunki: Jyväskylä")]
-        [InlineData("Emma", "25", "Berlin", "Nimesi on Emma, ja olet 25 vuotta vanha. Kotikaupunki: Berlin")]
-        [Trait("TestGroup", "HelloNimi3")]
-        public void HelloNimi3(string inputName, string age, string city, string expectedOutput)
+        [InlineData("2", "1")]
+        [InlineData("16", "345")]
+        [InlineData("3332", "96")]
+        [InlineData("102", "341")]
+
+        [Trait("TestGroup", "NumeronvaihtoTulostaessa")]
+        public void NumeronvaihtoTulostaessa(string num1, string num2)
         {
 
             // Arrange
-            var input = new StringReader($"{inputName}\n{age}\n{city}\n"); // Simulate all user inputs
+            var input = new StringReader($"{num1}\n{num2}\n"); // Simulate all user inputs
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -36,19 +32,18 @@ namespace HelloWorldTest
 
             // Get the console output
             var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-
+            string expectedOut = $"Syöttämäsi luvut: {num2} ja {num1}";
             // Assert
             Assert.False(string.IsNullOrEmpty(result[0]), "The first line should not be null or empty.");
-            Assert.True(LineContainsIgnoreSpaces(result[3], expectedOutput), "Expected: " + expectedOutput + "\n In Console: " + result[3]);    // Check the greeting message
+            Assert.True(LineContainsIgnoreSpaces(result[1], expectedOut), "Expected: " + expectedOut + "\n In Console: " + result[1]);    // Check the greeting message
         }
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace from the line and the expected text
-            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
-            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
+            string normalizedLine = Regex.Replace(line, @"\s+", "");
+            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "");
             return normalizedLine.Contains(normalizedExpectedText);
         }
-
 
         private int CountWords(string line)
         {
