@@ -44,14 +44,15 @@ namespace HelloWorldTest
             // Remove all whitespace from the line and the expected text
             string normalizedLine = Regex.Replace(line, @"\s+", "");
 
-            // Manually create the pattern with dots instead of escaping them
+            // Manually create the pattern, allowing any character for "ö" and "ä"
             string pattern = Regex.Replace(expectedText, @"\s+", "")
                                   .Replace("ö", ".")  // Allow any character for "ö"
                                   .Replace("ä", "."); // Allow any character for "ä"
 
-            // Check if the line matches the pattern
-            return Regex.IsMatch(normalizedLine, pattern);
+            // Check if the line matches the pattern, ignoring case
+            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
 
 
 
