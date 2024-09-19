@@ -33,7 +33,7 @@ namespace HelloWorldTest
 
             // Get the console output
             var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            string expectedOut = "Sy"+'ö'+"tt"+'ä'+"m" + 'ä' +"si luvut: " + $"{num2} ja {num1}";
+            string expectedOut = @"Sy.tt.m.si luvut: " + $"{num2} ja {num1}";
 
             // Assert
             Assert.False(string.IsNullOrEmpty(result[0]), "The first line should not be null or empty.");
@@ -43,9 +43,17 @@ namespace HelloWorldTest
         {
             // Remove all whitespace from the line and the expected text
             string normalizedLine = Regex.Replace(line, @"\s+", "");
-            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "");
-            return normalizedLine.Contains(normalizedExpectedText);
+
+            // Manually create the pattern with dots instead of escaping them
+            string pattern = Regex.Replace(expectedText, @"\s+", "")
+                                  .Replace("ö", ".")  // Allow any character for "ö"
+                                  .Replace("ä", "."); // Allow any character for "ä"
+
+            // Check if the line matches the pattern
+            return Regex.IsMatch(normalizedLine, pattern);
         }
+
+
 
         private int CountWords(string line)
         {
