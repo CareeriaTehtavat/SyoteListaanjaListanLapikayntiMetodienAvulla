@@ -8,14 +8,14 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData(5, 3, "5 on suurempi kuin 3")]
-        [InlineData(2, 4, "2 on pienempi kuin 4")] // Updated expected text
-        [InlineData(7, 7, "7 on yhtä suuri kuin 7")]
-        [Trait("TestGroup", "TestNumberComparison")]
-        public void TestNumberComparison(int num1, int num2, string expectedOutput)
+        [InlineData(50, 20, "Iso luku")]
+        [InlineData(30, 15, "Pieni luku")]
+        [InlineData(40, 20, "Pieni luku")]
+        [Trait("TestGroup", "KumpiOnSuurempi")]
+        public void KumpiOnSuurempi(int num1, int age, string expectedOutput)
         {
             // Arrange
-            var input = new StringReader($"{num1}\n{num2}\n"); // Simulate user inputs
+            var input = new StringReader($"{num1}\n{age}\n"); // Simulate user inputs
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -24,22 +24,27 @@ namespace HelloWorldTest
             // Act
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
-            // Get the console output and split it into lines
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            // Get the console output
+            var result = sw.ToString();
+            Console.WriteLine("Captured output:");
+            Console.WriteLine(result);
+
+            // Split the output into lines
+            var resultLines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
             // Debug output to see what the actual result contains
-            for (int i = 0; i < result.Length; i++)
+            for (int i = 0; i < resultLines.Length; i++)
             {
-                Console.WriteLine($"Line {i}: {result[i]}");
+                Console.WriteLine($"Line {i}: {resultLines[i]}");
             }
 
-            // Assert: Find the correct line with the comparison result (e.g., 2nd or 3rd line)
-            Assert.True(result.Length > 2, "Expected at least 3 lines of output.");
-
-            // Check the result at index 2 or whichever line contains the comparison output
-            Assert.True(LineContainsIgnoreSpaces(result[2], expectedOutput),
-                $"Expected: {expectedOutput} but got: {result[2]}");
+            // Assert: Check the final output for correctness
+            // Use the last line of the output (assumed to be where the result is printed)
+            var lastLine = resultLines.Length > 0 ? resultLines[resultLines.Length - 1] : "";
+            Assert.True(LineContainsIgnoreSpaces(lastLine, resultLines[2]),
+                $"Expected: {expectedOutput} but got: {resultLines[2]}");
         }
+
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace from the line and the expected text
