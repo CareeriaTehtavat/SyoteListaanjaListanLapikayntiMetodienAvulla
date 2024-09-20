@@ -8,7 +8,7 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("Tammikuu", "Sininen", "3", "Pelinimesi on Lumisateen Sininen Kaapio.")]
+        [InlineData("Tammikuu", "Sininen", "3", "Pelinimesi on Lumisateen Sininen Kääpiö.")]
         [InlineData("Huhtikuu", "Punainen", "7", "Pelinimesi on Aamukasteen Punainen Haltija.")]
         [InlineData("Joulukuu", "Musta", "12", "Pelinimesi on Lumisateen Musta Ewok.")]
 
