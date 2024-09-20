@@ -1,27 +1,31 @@
-# Numerot silmukassa
+# Kertotaulun tulostus silmukassa
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
 - Katso myös ensin if-else kirjallinen materiaali & While -silmukan materiaali!
-- Muista ehto normaaleihin sulkeisiin ja toiminto ehdon ollessa tosi aaltosulkeisiin!
+- Muista ehto normaaleihin sulkeisiin ja toiminto (ehdon ollessa tosi) aaltosulkeisiin!
 ## TEHTÄVÄNANTO
-- Sovellus, joka tulostaa luvut 1-10 silmukan sisällä (HUOM! Vain yksi Console.WriteLine -toiminto while-silmukan sisälle)
-- Tarvitset yhden integer muuttujan, joka tarkistaa kun numeroita on tulostetttu riittävästi.
+- Sovellus, joka tulostaa kertotaulun (1-10) käyttäjän syötteen arvosta (Esim: Käyttäjä antaa numeron 5 -> tulostuu kertotaulu 5*1, 5*2 ... 5*10)
+- Tarvitset kaksi integer muuttujaa, int luku ja int i, jossa i on kertotaulun kerroin, sekä silmukan lopetukseen tarvittava arvo (samalla tavalla kuin edellisessä tehtävässä)
+- HUOM! Tähän tehtävään ei tarvitse vielä tehdä syötteen tarkistusta (int.TryParse edelliseltä osiolta)
 
 
   
 ```
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+Anna luku: 4
+
+Kertitaulu luvulle 4:
+4 * 1 = 4
+4 * 2 = 8
+4 * 3 = 12
+4 * 4 = 16
+4 * 5 = 20
+4 * 6 = 24
+4 * 7 = 28
+4 * 8 = 32
+4 * 9 = 36
+4 * 10 = 40
 ```
 
 
