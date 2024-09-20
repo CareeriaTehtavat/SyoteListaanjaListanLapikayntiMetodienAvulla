@@ -8,9 +8,9 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("Tammikuu", "Sininen", "3", "Pelinimesi on Lumisateen Sininen Kääpiö.")]
+        [InlineData("Tammikuu", "Sininen", "3", "Pelinimesi on Lumisateen Sininen Kaapio.")]
         [InlineData("Huhtikuu", "Punainen", "7", "Pelinimesi on Aamukasteen Punainen Haltija.")]
-        [InlineData("Heinäkuu", "Vihreä", "12", "Pelinimesi on Kesäpäivän Vihreä Ewok.")]
+        [InlineData("Joulukuu", "Musta", "12", "Pelinimesi on Lumisateen Musta Ewok.")]
 
         [Trait("TestGroup", "TestNicknameGeneration")]
         public void TestNicknameGeneration(string kuukausi, string väri, string päivä, string expectedOutput)
@@ -44,14 +44,14 @@ namespace HelloWorldTest
             string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
 
-            // Create a regex pattern to allow any character for "ä" and "ö"
-            string pattern = Regex.Escape(normalizedExpectedText)
-                                  .Replace("ö", ".")  // Allow any character for "ö"
-                                  .Replace("ä", "."); // Allow any character for "ä"
+            // Normalize both the actual output and the expected text by replacing 'ä' -> 'a' and 'ö' -> 'o'
+            normalizedLine = normalizedLine.Replace("ä", "a").Replace("ö", "o");
+            normalizedExpectedText = normalizedExpectedText.Replace("ä", "a").Replace("ö", "o");
 
-            // Check if the line matches the pattern, ignoring case
-            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
+            // Check if the normalized line matches the normalized expected text
+            return normalizedLine == normalizedExpectedText;
         }
+
 
 
         private int CountWords(string line)
