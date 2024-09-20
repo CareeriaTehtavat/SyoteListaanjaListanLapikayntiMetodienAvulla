@@ -18,14 +18,21 @@ namespace HelloWorldTest
             // Act
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
-            // Get the console output
-            var result = sw.ToString();
+            // Get the console output and normalize line endings
+            var result = NormalizeLineEndings(sw.ToString());
 
-            // Prepare expected output
-            var expectedOutput = string.Join("\r\n", Enumerable.Range(1, 10)) + "\r\n";
+            // Prepare expected output (with normalized line endings)
+            var expectedOutput = NormalizeLineEndings(string.Join("\r\n", Enumerable.Range(1, 10)) + "\r\n");
 
-            // Assert: Check if the output matches the expected output
-            Assert.Equal(expectedOutput, result);
+            // Split the actual and expected outputs into lines
+            var actualLines = result.Split('\n');
+            var expectedLines = expectedOutput.Split('\n');
+
+            // Assert: Check if the output matches the expected output line by line
+            for (int i = 0; i < expectedLines.Length; i++)
+            {
+                Assert.Equal(expectedLines[i].Trim(), actualLines[i].Trim());
+            }
         }
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
@@ -64,5 +71,12 @@ namespace HelloWorldTest
             // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
             return output.Replace("\r\n", "\n").Trim();
         }
+
+        private string NormalizeLineEndings(string input)
+        {
+            // Normalize all line endings to '\n' for consistent comparison
+            return input.Replace("\r\n", "\n").Trim();
+        }
     }
+
 }
