@@ -8,23 +8,15 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
+        [InlineData("Tammikuu", "Sininen", "3", "Pelinimesi on Lumisateen Sininen K‰‰piˆ.")]
+        [InlineData("Huhtikuu", "Punainen", "7", "Pelinimesi on Aamukasteen Punainen Haltija.")]
+        [InlineData("Hein‰kuu", "Vihre‰", "12", "Pelinimesi on Kes‰p‰iv‰n Vihre‰ Ewok.")]
 
-        [InlineData(30, "Viel‰ pit‰‰ s‰‰st‰‰")]
-        [InlineData(50, "Sinulla on varaa hankkia Motorola G51")]
-        [InlineData(75, "Sinulla on varaa hankkia Motorola G51")]
-        [InlineData(199, "Sinulla on varaa hankkia Motorola G51")]
-        [InlineData(200, "Sinulla on varaa hankkia Samsung Galaxy")]
-        [InlineData(400, "Sinulla on varaa hankkia Samsung Galaxy")]
-        [InlineData(500, "Sinulla on varaa hankkia Tietokone, PS5 tai iPhone 11")]
-        [InlineData(999, "Sinulla on varaa hankkia Tietokone, PS5 tai iPhone 11")]
-        [InlineData(1500, "Sinulla on varaa hankkia parempi tietokone tai iPhone 14")]
-        [InlineData(2000, "Voit hankkia useamman eri laitteen")]
-        [InlineData(5000, "Voit hankkia useamman eri laitteen")]
-        [Trait("TestGroup", "TestMoneyComparison")]
-        public void TestMoneyComparison(double money, string expectedOutput)
+        [Trait("TestGroup", "TestNicknameGeneration")]
+        public void TestNicknameGeneration(string kuukausi, string v‰ri, string p‰iv‰, string expectedOutput)
         {
             // Arrange
-            var input = new StringReader($"{money}\n"); // Simulate user input
+            var input = new StringReader($"{kuukausi}\n{v‰ri}\n{p‰iv‰}\n"); // Simulate user inputs
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -35,18 +27,15 @@ namespace HelloWorldTest
 
             // Get the console output
             var result = sw.ToString();
-            Console.WriteLine("Captured output:");
-            Console.WriteLine(result);
 
             // Split the output into lines
             var resultLines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-
-            var lastLine = resultLines[0];
+            // Assert: Check the final output for correctness
+            var lastLine = resultLines[1];
             Assert.True(LineContainsIgnoreSpaces(lastLine, expectedOutput),
                 $"Expected: {expectedOutput} but got: {lastLine}");
         }
-
 
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
