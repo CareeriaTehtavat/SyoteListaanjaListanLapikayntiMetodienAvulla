@@ -1,4 +1,4 @@
-# Kuvioita ja muotoja
+# Luku kysely
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
@@ -9,15 +9,18 @@
 - Katso myös ensin if-else kirjallinen materiaali!
 - ehto - kyllä - ei ; ensimmäisten aaltosulkeiden sisällä on koodi mikä ajetaan mikäli ehto on totta, elsen jälkeen tulevien aaltosulkeiden sisällä on koodi mikä ajetaan jos ehto ei ole totta, eli kaikki muut tapaukset paitsi tosiehdon (tai ehtojen) tapaus toteuttaa elsen koodin. 
 ## TEHTÄVÄNANTO
-- Tarvitset konsolisovellukseen ika muuttujan, joka on muuttujatyypiltään int - eli kokonaisluku.   
-- Laita konsolisovellus pyytämään käyttäjää syöttämään konsoliin ikänsä, talleta syötetty ikä ika-muuttujaan.
-- Tarkista iän kysymisen jälkeen if-else lauseen avulla onko käyttäjä lapsi (alle 10 vuotta), teini (alle 18 vuotta) vai aikuinen (yli 18 vuotta). 
+- Tarvitset konsolisovellukseen luku1 ja luku2 muuttujat, joka on muuttujatyypiltään int - eli kokonaisluku.   
+- Laita konsolisovellus pyytämään käyttäjää syöttämään konsoliin molemmille luvuille arvot, talleta syötetyt numerot luku1 ja luku2-muuttujiin.
+- Toteuta If-else -lauseke, joka tarkistaa onko (if) luku1 suurempi kuin luku2, vai onko (else if) luku1 pienempi kuin luku2, vai onko (else if) luku1 yhtäsuuri kuin luku2. 
 - Muista: toiminto lohkon sisällä päätetään puolipisteeseen (esim WriteLine();), jokainen ehtolohko on omien aaltosulkeiden { } sisällä, ehdon päätteeksi ei tule puolipistettä, koska ehto ei ole toiminto 
 - Esimerkkituloste:
   
 ```
-Syötä ikäsi: 19
-olet aikuinen.
+Anna ensimmäinen luku:
+5
+Anna toinen luku:
+3
+5 on suurempi kuin 3
 ```
 
 > [!IMPORTANT]
