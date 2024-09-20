@@ -7,18 +7,11 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-        [Theory]
-        [InlineData("Tammikuu", "Sininen", "3", "Pelinimesi on Lumisateen Sininen Kaapio.")]
-        [InlineData("Huhtikuu", "Punainen", "7", "Pelinimesi on Aamukasteen Punainen Haltija.")]
-        [InlineData("Joulukuu", "Musta", "12", "Pelinimesi on Lumisateen Musta Ewok.")]
-
-        [Trait("TestGroup", "TestNicknameGeneration")]
-        public void TestNicknameGeneration(string kuukausi, string vari, string paiva, string expectedOutput)
+        [Fact]
+        [Trait("TestGroup", "TestNumberPrinting")]
+        public void TestNumberPrinting()
         {
             // Arrange
-            var input = new StringReader($"{kuukausi}\n{vari}\n{paiva}\n"); // Simulate user inputs
-            Console.SetIn(input);
-
             using var sw = new StringWriter();
             Console.SetOut(sw); // Capture console output
 
@@ -28,33 +21,20 @@ namespace HelloWorldTest
             // Get the console output
             var result = sw.ToString();
 
-            // Split the output into lines
-            var resultLines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            // Prepare expected output
+            var expectedOutput = string.Join("\r\n", Enumerable.Range(1, 10)) + "\r\n";
 
-            // Assert: Check the final output for correctness
-            var lastLine = resultLines[1];
-            Assert.True(LineContainsIgnoreSpaces(lastLine, expectedOutput),
-                $"Expected: {expectedOutput} but got: {lastLine}");
+            // Assert: Check if the output matches the expected output
+            Assert.Equal(expectedOutput, result);
         }
-
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Remove all whitespace and convert to lowercase
+            // Remove all whitespace from the line and the expected text
             string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
-
-            // Create a regex pattern to allow any character for "ä" and "ö"
-            string pattern = Regex.Escape(normalizedExpectedText)
-                                  .Replace("ö", ".")  // Allow any character for "ö"
-                                  .Replace("ä", ".") // Allow any character for "ä"
-                                  .Replace("a", ".") // Allow any character for "ä"
-                                  .Replace("o", "."); // Allow any character for "ä"
-
-            // Check if the line matches the pattern, ignoring case
-            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
+            return normalizedLine.Contains(normalizedExpectedText);
         }
-
 
 
         private int CountWords(string line)
