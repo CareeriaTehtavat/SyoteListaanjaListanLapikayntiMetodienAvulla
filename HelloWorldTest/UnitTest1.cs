@@ -8,14 +8,23 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData(50, 20, "Iso luku")]
-        [InlineData(30, 15, "Pieni luku")]
-        [InlineData(40, 20, "Pieni luku")]
-        [Trait("TestGroup", "KumpiOnSuurempi")]
-        public void KumpiOnSuurempi(int num1, int age, string expectedOutput)
+
+        [InlineData(30, "Vielä pitää säästää")]
+        [InlineData(50, "Sinulla on varaa hankkia Motorola G51")]
+        [InlineData(75, "Sinulla on varaa hankkia Motorola G51")]
+        [InlineData(199, "Sinulla on varaa hankkia Motorola G51")]
+        [InlineData(200, "Sinulla on varaa hankkia Samsung Galaxy")]
+        [InlineData(400, "Sinulla on varaa hankkia Samsung Galaxy")]
+        [InlineData(500, "Sinulla on varaa hankkia Tietokone, PS5 tai iPhone 11")]
+        [InlineData(999, "Sinulla on varaa hankkia Tietokone, PS5 tai iPhone 11")]
+        [InlineData(1500, "Sinulla on varaa hankkia parempi tietokone tai iPhone 14")]
+        [InlineData(2000, "Voit hankkia useamman eri laitteen")]
+        [InlineData(5000, "Voit hankkia useamman eri laitteen")]
+        [Trait("TestGroup", "TestMoneyComparison")]
+        public void TestMoneyComparison(double money, string expectedOutput)
         {
             // Arrange
-            var input = new StringReader($"{num1}\n{age}\n"); // Simulate user inputs
+            var input = new StringReader($"{money}\n"); // Simulate user input
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -32,25 +41,27 @@ namespace HelloWorldTest
             // Split the output into lines
             var resultLines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            // Debug output to see what the actual result contains
-            for (int i = 0; i < resultLines.Length; i++)
-            {
-                Console.WriteLine($"Line {i}: {resultLines[i]}");
-            }
 
-            // Assert: Check the final output for correctness
-            // Use the last line of the output (assumed to be where the result is printed)
-            var lastLine = resultLines.Length > 0 ? resultLines[resultLines.Length - 1] : "";
-            Assert.True(LineContainsIgnoreSpaces(lastLine, resultLines[2]),
-                $"Expected: {expectedOutput} but got: {resultLines[2]}");
+            var lastLine = resultLines[0];
+            Assert.True(LineContainsIgnoreSpaces(lastLine, expectedOutput),
+                $"Expected: {expectedOutput} but got: {lastLine}");
         }
+
+
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Remove all whitespace from the line and the expected text
+            // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
-            return normalizedLine.Contains(normalizedExpectedText);
+
+            // Create a regex pattern to allow any character for "ä" and "ö"
+            string pattern = Regex.Escape(normalizedExpectedText)
+                                  .Replace("ö", ".")  // Allow any character for "ö"
+                                  .Replace("ä", "."); // Allow any character for "ä"
+
+            // Check if the line matches the pattern, ignoring case
+            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
 
 

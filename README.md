@@ -1,4 +1,4 @@
-# Kumpi on suurempi
+# laitehankinta (JA operaattori)
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
@@ -6,20 +6,45 @@
 - Katso myös ensin if-else kirjallinen materiaali!
 - Muu extra johdatteleva materiaali ja huomiot
 ## TEHTÄVÄNANTO
-- Tarvitset kaksi lukumuuttujaa; luku1 ja ikä.
-- Laita ohjelma pyytämään käyttäjältä arvo luku1 muuttujalle sekä ikä muuttujalle
-- Jos syötetty luku on suurempi kuin ikä kerrottuna kahdella (luku > ikä*2) ohjelma tulosaa konsoliin "iso luku".
-- Jos luku on pienempi kuin ikä kerrottuna kahdella tulostuu "pieni luku".
-- Esimerkkituloste:
+- Tarvitset vain yhden lukumuuttujan
+- Laita ohjelma kysymään käyttäjältä paljonko hänellä on rahaa käytettävissään
+- Tee jos-lause, joka kertoo, mihin laitteeseen käyttäjällä on varaa.
+- Vaihtoehdot: 
+    - 50-200 : Motorola G51 (rahaa on enemmän kuin 50 JA vähemmän kuin 200)
+    - 201-500 : Samsung Galaxy
+    - 501-1000 : Tietokone, PS5 tai iPhone 11
+    - 1001-2000 : Parempi tietokone tai iPhone 14
+    - 2001 tai enemmän : Voit hankkia useamman eri laitteen
+- Tee if-lause, joka tulostaa vaihtoehdot syötetyn summan mukaan
+- Tulostuksessa sinun pitää varmistaa, että teksti ja asetukset (esimerkiksi välit ja muut laitteet) ovat täsmälleen samat kuin annetuissa esimerkeissä.
+
   
 ```
-Syötä jokin luku:
-12
-Syötä ikäsi:
-45
-
-Pieni luku
+Kuinka paljon rahaa on käytössä: 23
+Vielä pitää säästää
 ```
+```
+Kuinka paljon rahaa on käytössä: 76
+Sinulla on varaa hankkia Motorola G51
+```
+```
+Kuinka paljon rahaa on käytössä: 350
+Sinulla on varaa hankkia Samsung Galaxy
+```
+```
+Kuinka paljon rahaa on käytössä: 750
+Sinulla on varaa hankkia Tietokone, PS5 tai iPhone 11
+```
+```
+
+Kuinka paljon rahaa on käytössä: 1200
+Sinulla on varaa hankkia parempi tietokone tai iPhone 14
+```
+```
+Kuinka paljon rahaa on käytössä: 2500
+Voit hankkia useamman eri laitteen
+```
+
 
 > [!IMPORTANT]
 > Koodin kirjoittamisen johdanto
