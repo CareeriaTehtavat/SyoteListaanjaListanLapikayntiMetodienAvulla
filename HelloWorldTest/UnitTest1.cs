@@ -13,10 +13,10 @@ namespace HelloWorldTest
         [InlineData("Joulukuu", "Musta", "12", "Pelinimesi on Lumisateen Musta Ewok.")]
 
         [Trait("TestGroup", "TestNicknameGeneration")]
-        public void TestNicknameGeneration(string kuukausi, string väri, string päivä, string expectedOutput)
+        public void TestNicknameGeneration(string kuukausi, string vari, string paiva, string expectedOutput)
         {
             // Arrange
-            var input = new StringReader($"{kuukausi}\n{väri}\n{päivä}\n"); // Simulate user inputs
+            var input = new StringReader($"{kuukausi}\n{vari}\n{paiva}\n"); // Simulate user inputs
             Console.SetIn(input);
 
             using var sw = new StringWriter();
