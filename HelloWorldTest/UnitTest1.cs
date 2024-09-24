@@ -9,6 +9,7 @@ namespace HelloWorldTest
     {
 
         [Fact]
+        [Trait("TestGroup", "InputValidation")]
         public void TestConsoleOutputContainsMoreThanTwoLinesWithText()
         {
             // Arrange
