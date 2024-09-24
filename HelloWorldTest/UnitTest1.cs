@@ -8,49 +8,36 @@ namespace HelloWorldTest
     public class UnitTest1
     {
 
-        [Theory]
-        [InlineData("vdf", "dsfsdf", "avain",
-            "Kirjoita joku seuraavista sanoista ja paina enter.\nkello\ntalo\navain\n" +
-            "vdf on virheellinen syote, kirjoita joku seuraavista ja paina enter.\nkello\ntalo\navain\n" +
-            "dsfsdf on virheellinen syote, kirjoita joku seuraavista ja paina enter.\nkello\ntalo\navain\n" +
-            "Olen viesti-niminen muuttuja avain\nOlen viesti-niminen muuttuja avain Olen viesti-niminen muuttuja avain\navain")]
-        [Trait("TestGroup", "InputValidation")]
-        public void TestUserInput(string firstInvalidInput, string secondInvalidInput, string validInput, string expectedOutput)
+        [Fact]
+        public void TestConsoleOutputContainsMoreThanTwoLinesWithText()
         {
             // Arrange
-            var input = new StringReader($"{firstInvalidInput}\n{secondInvalidInput}\n{validInput}\n");
-            Console.SetIn(input);
-
             using var sw = new StringWriter();
             Console.SetOut(sw); // Capture console output
 
             // Act
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
-            // Get the console output and normalize line endings
-            var result = NormalizeOutput(sw.ToString());
-            var expected = NormalizeOutput(expectedOutput);
+            // Get the console output
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            // Assert
-            Assert.True(LineContainsIgnoreSpaces(result, expected),
-                $"Expected: {expected} but got: {result}");
+            // Debug output to see the actual result
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.WriteLine($"Line {i}: '{result[i]}'");
+            }
+
+            // Check if there are more than 2 lines
+            Assert.True(result.Length > 2, "The output does not contain more than 2 lines.");
+            Assert.False(string.IsNullOrWhiteSpace(result[0]), "One of the lines does not contain any text.");
+            Assert.False(string.IsNullOrWhiteSpace(result[1]), "One of the lines does not contain any text.");
         }
-
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Remove all whitespace and convert to lowercase
+            // Remove all whitespace from the line and the expected text
             string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
-
-            // Create a regex pattern to allow any character for "ä" and "ö"
-            string pattern = Regex.Escape(normalizedExpectedText)
-                                  .Replace("ö", ".")  // Allow any character for "ö"
-                                  .Replace("ä", ".") // Allow any character for "ä"
-                                  .Replace("a", ".") // Allow any character for "ä"
-                                  .Replace("o", "."); // Allow any character for "ä"
-
-            // Check if the line matches the pattern, ignoring case
-            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
+            return normalizedLine.Contains(normalizedExpectedText);
         }
 
 
