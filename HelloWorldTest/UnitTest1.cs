@@ -1,4 +1,3 @@
-
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -8,17 +7,13 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-
         [Theory]
-        [InlineData("2")]
-        [InlineData("16")]
-        [InlineData("3332")]
-        [InlineData("102")]
-        [Trait("TestGroup", "Kertotaulu")]
-        public void Kertotaulu(string inputNumber)
+        [InlineData("en", "Et edes antanut lukua", "miksi?", "Et edes antanut lukua", "3", "Yritapa uudelleen", "6", "Yritapa uudelleen", "4", "Onnisuit! Poistuit silmukasta")]
+        [Trait("TestGroup", "InputLoop")]
+        public void TestInputLoop_IgnoreSpacesAndSymbols(params string[] inputs)
         {
             // Arrange
-            var input = new StringReader(inputNumber); // Simulate user input for the number
+            var input = new StringReader(string.Join(Environment.NewLine, inputs));
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -28,43 +23,43 @@ namespace HelloWorldTest
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
             // Get the console output
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            var result = sw.ToString();
 
-            // Prepare expected multiplication table output
-            int number = int.Parse(inputNumber);
-            var expectedOutput = new List<string>
-    {
-        $"Kertitaulu luvulle {number}:",
-        $"{number} * 1  = {number * 1}",
-        $"{number} * 2  = {number * 2}",
-        $"{number} * 3  = {number * 3}",
-        $"{number} * 4  = {number * 4}",
-        $"{number} * 5  = {number * 5}",
-        $"{number} * 6  = {number * 6}",
-        $"{number} * 7  = {number * 7}",
-        $"{number} * 8  = {number * 8}",
-        $"{number} * 9  = {number * 9}",
-        $"{number} * 10 = {number * 10}"
+            // Expected substrings we want to find in the result
+            var expectedSubstrings = new[]
+            {
+        "kirjoita luku 4",
+        "et edes antanut lukua",
+        "yritapa uudelleen",
+        "onnisuit! poistuit silmukasta"
     };
 
-            // Assert that the correct prompt is shown
-            Assert.False(string.IsNullOrEmpty(result[0]), "The first line should not be null or empty.");
-            Assert.True(LineContainsIgnoreSpaces(result[0], "Anna luku:"), "The prompt message did not match.");
-
-            // Assert that each line of output matches the expected multiplication table
-            for (int i = 1; i < expectedOutput.Count + 1; i++) // Starting from line 1 as the first line is the prompt
+            // Ensure the result contains the expected substrings
+            foreach (var expected in expectedSubstrings)
             {
-                Assert.True(LineContainsIgnoreSpaces(result[i], expectedOutput[i - 1]),
-                    $"Expected: {expectedOutput[i - 1]} but got: {result[i]}");
+                Assert.True(LineContainsIgnoreSpaces(result, expected),
+                    $"Expected to find: {expected} in the output, but it was not found.");
             }
         }
+
+
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Remove all whitespace from the line and the expected text
-            string normalizedLine = Regex.Replace(line, @"\s+", "");
-            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "");
-            return normalizedLine.Contains(normalizedExpectedText);
+            // Remove all whitespace and convert to lowercase
+            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
+            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
+
+            // Create a regex pattern to allow any character for "ä" and "ö"
+            string pattern = Regex.Escape(normalizedExpectedText)
+                                  .Replace("ö", ".")  // Allow any character for "ö"
+                                  .Replace("ä", ".") // Allow any character for "ä"
+                                  .Replace("a", ".") // Allow any character for "ä"
+                                  .Replace("o", "."); // Allow any character for "ä"
+
+            // Check if the line matches the pattern, ignoring case
+            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
 
         private int CountWords(string line)
         {
@@ -88,6 +83,10 @@ namespace HelloWorldTest
 
             return true;
         }
-
+        private string NormalizeOutput(string output)
+        {
+            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
+            return output.Replace("\r\n", "\n").Trim();
+        }
     }
 }

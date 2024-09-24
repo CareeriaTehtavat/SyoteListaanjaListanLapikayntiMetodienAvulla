@@ -1,34 +1,52 @@
-# Kertotaulun tulostus silmukassa
+# Anna tietty luku poistuakseen silmukasta
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
 - Katso myös ensin if-else kirjallinen materiaali & While -silmukan materiaali!
-- Muista ehto normaaleihin sulkeisiin ja toiminto (ehdon ollessa tosi) aaltosulkeisiin!
+- Break -toiminto
+- int.TryParse -toiminto
+- Muista ehto tulee normaaleihin sulkeisiin ja toiminto (ehdon ollessa tosi) tulee aaltosulkeisiin!
 ## TEHTÄVÄNANTO
-- Sovellus, joka tulostaa kertotaulun (1-10) käyttäjän syötteen arvosta (Esim: Käyttäjä antaa numeron 5 -> tulostuu kertotaulu 5*1, 5*2 ... 5*10)
-- Tarvitset kaksi integer muuttujaa, int luku ja int i, jossa i on kertotaulun kerroin, sekä silmukan lopetukseen tarvittava arvo (samalla tavalla kuin edellisessä tehtävässä)
-- HUOM! Tähän tehtävään ei tarvitse vielä tehdä syötteen tarkistusta (int.TryParse edelliseltä osiolta)
+- Konsolisovellus, jossa käyttäjältä kysytään tiettyä numeroa poistuakseen silmukasta.
+- Tarvitset kaksi muuttujaa, string syöte ja int luku. Toteuta sovellukselle syötteen tarkistus, mikäli käyttäjä ei anna numeroa niin kysytään sitä häneltä uudestaan
+- Numero, jota sovellus pyytää, voi olla esimerkiksi 4. Kun käyttäjä antaa jonkin muun numeron syötteeksi, tulostuu jokin teksti, esimerkiksi "yritäppä uudelleen". Kun käyttäjä antaa luvun 4 syötteeksi, tulostuu "Onnistuit vihdoinkin! Poistuit silmukasta!"
+- HUOM! Tässä tehtävässä on yksi while-silmukka ja kaksi if-lausetta, toinen if lauseesta on ensimmäisen if-lauseen sisällä HINT:
 
 
   
 ```
-Anna luku: 4
+if (int.TryParse(syöte, out luku))
+{
+    if (luku == 4)
+    {
 
-Kertitaulu luvulle 4:
-4 * 1 = 4
-4 * 2 = 8
-4 * 3 = 12
-4 * 4 = 16
-4 * 5 = 20
-4 * 6 = 24
-4 * 7 = 28
-4 * 8 = 32
-4 * 9 = 36
-4 * 10 = 40
+    }               
+}
 ```
+Tekstin pitää olla sama kuin esimerkissa!
+Odotettu tulostus:
+
+```
+Kirjoita luku 4: en
+Et edes antanut lukua..
 
 
+Kirjoita luku 4: miksi?
+Et edes antanut lukua..
+
+
+Kirjoita luku 4: 3
+Yritäpä uudelleen..
+
+
+Kirjoita luku 4: 6
+Yritäpä uudelleen..
+
+
+Kirjoita luku 4: 4
+Onnisuit! Poistuit silmukasta
+```
 
 > [!IMPORTANT]
 > Koodin kirjoittamisen johdanto
