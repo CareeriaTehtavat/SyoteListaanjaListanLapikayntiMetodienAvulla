@@ -7,13 +7,18 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
+
         [Theory]
-        [InlineData("en", "Et edes antanut lukua", "miksi?", "Et edes antanut lukua", "3", "Yritapa uudelleen", "6", "Yritapa uudelleen", "4", "Onnisuit! Poistuit silmukasta")]
-        [Trait("TestGroup", "InputLoop")]
-        public void TestInputLoop_IgnoreSpacesAndSymbols(params string[] inputs)
+        [InlineData("vdf", "dsfsdf", "avain",
+            "Kirjoita joku seuraavista sanoista ja paina enter.\nkello\ntalo\navain\n" +
+            "vdf on virheellinen syote, kirjoita joku seuraavista ja paina enter.\nkello\ntalo\navain\n" +
+            "dsfsdf on virheellinen syote, kirjoita joku seuraavista ja paina enter.\nkello\ntalo\navain\n" +
+            "Olen viesti-niminen muuttuja avain\nOlen viesti-niminen muuttuja avain Olen viesti-niminen muuttuja avain\navain")]
+        [Trait("TestGroup", "InputValidation")]
+        public void TestUserInput(string firstInvalidInput, string secondInvalidInput, string validInput, string expectedOutput)
         {
             // Arrange
-            var input = new StringReader(string.Join(Environment.NewLine, inputs));
+            var input = new StringReader($"{firstInvalidInput}\n{secondInvalidInput}\n{validInput}\n");
             Console.SetIn(input);
 
             using var sw = new StringWriter();
@@ -22,26 +27,14 @@ namespace HelloWorldTest
             // Act
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
-            // Get the console output
-            var result = sw.ToString();
+            // Get the console output and normalize line endings
+            var result = NormalizeOutput(sw.ToString());
+            var expected = NormalizeOutput(expectedOutput);
 
-            // Expected substrings we want to find in the result
-            var expectedSubstrings = new[]
-            {
-        "kirjoita luku 4",
-        "et edes antanut lukua",
-        "yritapa uudelleen",
-        "onnisuit! poistuit silmukasta"
-    };
-
-            // Ensure the result contains the expected substrings
-            foreach (var expected in expectedSubstrings)
-            {
-                Assert.True(LineContainsIgnoreSpaces(result, expected),
-                    $"Expected to find: {expected} in the output, but it was not found.");
-            }
+            // Assert
+            Assert.True(LineContainsIgnoreSpaces(result, expected),
+                $"Expected: {expected} but got: {result}");
         }
-
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {

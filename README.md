@@ -1,52 +1,50 @@
-# Anna tietty luku poistuakseen silmukasta
+# Muuttujan uusiokäyttöä ja while
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
-- Katso myös ensin if-else kirjallinen materiaali & While -silmukan materiaali!
-- Break -toiminto
-- int.TryParse -toiminto
-- Muista ehto tulee normaaleihin sulkeisiin ja toiminto (ehdon ollessa tosi) tulee aaltosulkeisiin!
+- Katso myös ensin if-else kirjallinen materiaali!
+- Katso myös while (endless loop) materiaali
+- Lue harjoitus läpi, lue se uudestaan. Pilko tehtävänanto toteutettavissa oleviin palasiin. Lue harjoitus vielä kerran läpi.
 ## TEHTÄVÄNANTO
-- Konsolisovellus, jossa käyttäjältä kysytään tiettyä numeroa poistuakseen silmukasta.
-- Tarvitset kaksi muuttujaa, string syöte ja int luku. Toteuta sovellukselle syötteen tarkistus, mikäli käyttäjä ei anna numeroa niin kysytään sitä häneltä uudestaan
-- Numero, jota sovellus pyytää, voi olla esimerkiksi 4. Kun käyttäjä antaa jonkin muun numeron syötteeksi, tulostuu jokin teksti, esimerkiksi "yritäppä uudelleen". Kun käyttäjä antaa luvun 4 syötteeksi, tulostuu "Onnistuit vihdoinkin! Poistuit silmukasta!"
-- HUOM! Tässä tehtävässä on yksi while-silmukka ja kaksi if-lausetta, toinen if lauseesta on ensimmäisen if-lauseen sisällä HINT:
+-Tarvitset if:in, whilen, kaksi muuttujaa sekä kaksi toimintoa.
+- LUE TARKASTI KOKO TEHTÄVÄNANTO LÄPI
+- Muuttujat: tekstimuuttujia; viesti ja syöte
+- Toiminnot: ReadLine ja WriteLine
+- Viestin arvo = "Olen viesti-niminen muuttuja "
+- Ohjelman käynnistyessä laita se kysymään käyttäjältä syöte-muuttujaan joku 3 esimäärittelemästäsi sanasta
+- While looppaa jos-lausetta, kunnes syötteen arvo on yksi esimääritellyistä sanoista. 
+    - Jos lauseessa ehtona on, että syöte on yksi esimääritellyistä sanoista, ja aaltosulkeiden sisällä oleva toiminto lisää viestin sisältöön syötteen sisällön. 
+    - Mikäli sana ei ole yksikään annetuista 3 sanasta, konsoli ilmoittaa, että syöte on väärä ja pyytää uudestaan sanaa joka olisi yksi kolmesta annetusta vaihtoehdosta. 
+- Laita konsoli tulostamaan viesti-muuttujan sisältö konsoliin tässä vaiheessa.
+- Lisää viesti muuttujan sisältö toisen kerran viesti-muuttujaan
+- Laita konsoli tulostamaan viesti-muuttuja uudestaan.
+- Nyt korvaa viesti muuttujan sisältö syöte muuttujan sisällöllä ja tulosta vielä kerran viesti muuttuja
+
+
+HUOM: "Kirjoita joku seuraavista sanoista ja paina enter.", sanat. ja " on virheellinen syöte, kirjoita joku seuraavista ja paina enter." tekstit on kirjoitettu suoraan Console.WriteLinen sisälle, kaikki muut tulosteet ovat pelkästään muuttujan tulostusta.
+
 
 
   
 ```
-if (int.TryParse(syöte, out luku))
-{
-    if (luku == 4)
-    {
+Kirjoita joku seuraavista sanoista ja paina enter.
+kello
+talo
+avain
 
-    }               
-}
+ke
+ke on virheellinen syöte, kirjoita joku seuraavista ja paina enter.
+kello
+talo
+avain
+
+kello
+Olen viesti-niminen muuttuja kello
+Olen viesti-niminen muuttuja kello Olen viesti-niminen muuttuja kello
+kello
 ```
-Tekstin pitää olla sama kuin esimerkissa!
-Odotettu tulostus:
 
-```
-Kirjoita luku 4: en
-Et edes antanut lukua..
-
-
-Kirjoita luku 4: miksi?
-Et edes antanut lukua..
-
-
-Kirjoita luku 4: 3
-Yritäpä uudelleen..
-
-
-Kirjoita luku 4: 6
-Yritäpä uudelleen..
-
-
-Kirjoita luku 4: 4
-Onnisuit! Poistuit silmukasta
-```
 
 > [!IMPORTANT]
 > Koodin kirjoittamisen johdanto
