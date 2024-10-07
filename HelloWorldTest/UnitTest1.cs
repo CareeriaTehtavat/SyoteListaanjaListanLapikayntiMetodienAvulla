@@ -1,3 +1,4 @@
+
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -7,42 +8,35 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-        [Theory]
-        [InlineData("auto\nvene\nkukka\nlopeta\n",
-             "Sanassa on parillinen maara kirjaimia\nSanassa on parillinen maara kirjaimia\nSanassa on pariton maara kirjaimia\n")]
 
-        [InlineData("omena\nomena\nomena\nlopeta\n",
-            "Sanassa on pariton maara kirjaimia\nSanassa on pariton maara kirjaimia\nSanassa on pariton maara kirjaimia\n")]
-        [Trait("TestGroup", "Test_MultipleWords_And_ExitCondition")]
+        [Fact]
+        // Input: 6 (valid from the start)
+        [Trait("TestGroup", "TestUserInput")]
 
-        public void Test_MultipleWords_And_ExitCondition(string input, string expectedOutput)
+        public void TestUserInput()
         {
-            // Arrange: Asetetaan syöte ja tulosteen tallennus
-            var inputReader = new StringReader(input);
-            Console.SetIn(inputReader);
+            using var sw = new StringWriter();
+            Console.SetOut(sw); // Redirect console output
 
-            var outputWriter = new StringWriter();
-            Console.SetOut(outputWriter);
+            // Act
+            HelloWorld.Program.Main(new string[0]);
 
-            // Act: Ajetaan ohjelma
-            HelloWorld.Program.Main(null);
-
-            // Vähennetään turhat kehotukset ja verrataan vain olennaista tulostetta
-            var actualOutput = outputWriter.ToString();
-
-            // Suodatetaan pois kehotusrivit ("Syötä sana...")
-            string filteredOutput = string.Join("\n", actualOutput
-                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                .Where(line => !line.StartsWith("Sy"))); // suodatetaan kehotusrivit
-
-            // Assert: Verrataan tulostetta odotettuun tulosteeseen
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, filteredOutput), "Expected: " + expectedOutput
-                + " Actual: " + actualOutput);
+            // Assert
+            var result = sw.ToString().Trim(); // Get console output and trim any extra spaces/newlines
+            var expectedOutput = GenerateExpectedOddNumbersOutput();
+            Assert.Equal(expectedOutput, result); // Compare the output
         }
-
-
-
-        private bool LineContainsIgnoreSpaces(string expectedText, string line)
+        private string GenerateExpectedOddNumbersOutput()
+        {
+            // Generates the expected output of odd numbers from 1 to 100
+            var expectedOutput = "";
+            for (int i = 1; i <= 100; i += 2)
+            {
+                expectedOutput += i + " ";
+            }
+            return expectedOutput.Trim(); // Trim any extra spaces
+        }
+        private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
@@ -58,6 +52,7 @@ namespace HelloWorldTest
             // Check if the line matches the pattern, ignoring case
             return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
 
 
         private int CountWords(string line)
@@ -82,6 +77,10 @@ namespace HelloWorldTest
 
             return true;
         }
-
+        private string NormalizeOutput(string output)
+        {
+            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
+            return output.Replace("\r\n", "\n").Trim();
+        }
     }
 }
