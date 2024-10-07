@@ -7,41 +7,31 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
+
         [Theory]
-        [InlineData("Moi15", "Kirjainten maara: 3", "Numeroiden maara: 2")]
-        [InlineData("343432", "Kirjainten maara: 0", "Numeroiden maara: 6")]
-        [InlineData("Kuka sina olet", "Kirjainten maara: 12", "Numeroiden maara: 0")]
-        [Trait("TestGroup", "Test_SanaManipulations")]
+        [InlineData("10\n7\n", "Syota luku:\nIso luku\nSyota luku:\nPieni luku\n")] // Input: 10, then 7
+        [InlineData("9\n8\n", "Syota luku:\nIso luku\nSyota luku:\nPieni luku\n")]   // Input: 9, then 8
+        [InlineData("6\n", "Syota luku:\nPieni luku\n")]                            // Input: 6 (valid from the start)
+        [Trait("TestGroup", "TestUserInput")]
 
-        public void Test_SanaManipulations(string nimi, string expectedOutput, string pieninOutput)
+        public void TestUserInput(string userInput, string expectedOutput)
         {
-            // Arrange: Simulate console input
-            var inputReader = new StringReader(nimi + '\n');
-            Console.SetIn(inputReader);
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw); // Redirect console output
 
-            var sw = new StringWriter();
-            Console.SetOut(sw);
+            var input = new StringReader(userInput);
+            Console.SetIn(input); // Redirect user input
 
-            // Act: Run the main program
-            HelloWorld.Program.Main(null);
+            // Act
+            HelloWorld.Program.Main(new string[0]);
 
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                         .Where(line => !string.IsNullOrWhiteSpace(line))
-                         .ToArray();
-
-
-            // Assert: Verify output
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[1]), "Expected: " + expectedOutput
-                + " printed: " + result[1]);
-            Assert.True(LineContainsIgnoreSpaces(pieninOutput, result[2]), "Expected: " + pieninOutput
-                + " printed: " + result[2]);
-
+            // Assert
+            var result = sw.ToString();
+            Assert.True(LineContainsIgnoreSpaces(result, expectedOutput), $"Expected:\n{expectedOutput}\nBut got:\n{result}");
         }
 
-
-
-
-        private bool LineContainsIgnoreSpaces(string expectedText, string line)
+        private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
@@ -57,6 +47,7 @@ namespace HelloWorldTest
             // Check if the line matches the pattern, ignoring case
             return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
 
 
         private int CountWords(string line)
@@ -81,6 +72,10 @@ namespace HelloWorldTest
 
             return true;
         }
-
+        private string NormalizeOutput(string output)
+        {
+            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
+            return output.Replace("\r\n", "\n").Trim();
+        }
     }
 }

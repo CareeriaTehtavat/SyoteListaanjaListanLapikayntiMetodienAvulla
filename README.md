@@ -1,21 +1,29 @@
-# Lukujen ja kirjainten määrä
+# Luvun vertailu ohjelmassa ja rajoitettu silmukkatoisto
+Tavoitteena on kirjoittaa ohjelma, joka pyytää käyttäjää syöttämään luvun, ja vertaa syötettyä lukua arvoon 8. Ohjelma jatkaa lukujen kysymistä, kunnes käyttäjä syöttää luvun, joka on enintään 8, tai kunnes käyttäjä on syöttänyt luvun kahdeksan kertaa.
+
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
  
 ## TEHTÄVÄNANTO
-- Tee sovellus, joka laskee lukujen ja kirjaimien määrän konsoliin syötetyssä sattumanvaraisessa kirjain ja numerojonossa.
-(Vinkki: isLetter, isDigit, Count)
-- Laita tulostumaan kuinka monta lukua annetussa merkkijonossa on, laita tulostumaan myös kuinka monta kirjainta siinä on?
+- Syötteen kysyminen: Ohjelma pyytää käyttäjää syöttämään luvun kahdeksan kertaa (tai kunnes kelvollinen luku on annettu).
+- Luvun tarkistus: Jokaisen syötön jälkeen ohjelma tarkistaa, onko syötetty luku suurempi kuin 8.
+- Jos luku on suurempi kuin 8, ohjelma tulostaa viestin "Iso luku" ja pyytää uuden syötteen.
+- Jos luku on 8 tai pienempi, ohjelma tulostaa viestin "Pieni luku" ja lopettaa silmukan välittömästi.
+- Rajoitettu toisto: Ohjelma käyttää for-silmukkaa, joka toistuu korkeintaan kahdeksan kertaa, mutta lopettaa heti, kun käyttäjä syöttää luvun, joka on 8 tai pienempi.
 
 Esimerkkisuoritus:
 ```
-Anna merkkijono, jossa on kirjaimia ja numeroita:
-ghkjlöö54364738
-Kirjainten määrä: 7
-Numeroiden määrä: 8
-
+Syötä luku:
+10
+Iso luku
+Syötä luku:
+12
+Iso luku
+Syötä luku:
+8
+Pieni luku
 ```
 
 > [!IMPORTANT]
