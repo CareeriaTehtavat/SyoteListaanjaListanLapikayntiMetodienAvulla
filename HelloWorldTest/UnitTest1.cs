@@ -33,7 +33,7 @@ namespace HelloWorldTest
             // Suodatetaan pois kehotusrivit ("Syötä sana...")
             string filteredOutput = string.Join("\n", actualOutput
                 .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                .Where(line => !line.StartsWith("Syötä sana"))); // suodatetaan kehotusrivit
+                .Where(line => !line.StartsWith("Sy"))); // suodatetaan kehotusrivit
 
             // Assert: Verrataan tulostetta odotettuun tulosteeseen
             Assert.True(LineContainsIgnoreSpaces(expectedOutput, filteredOutput), "Expected: " + expectedOutput
