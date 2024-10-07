@@ -1,3 +1,4 @@
+
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -8,36 +9,43 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("anton\nArtemii\n", "nntoa"
-            , "AArtemiiA")]
-        [Trait("TestGroup", "Test_SanaManipulations")]
+        [InlineData("nikke\nonni\neemeli\nnia\naalto yliopisto\n", new[] { "nikke", "onni", "eemeli", "nia", "aalto yliopisto" })]
+        [InlineData("alice\nbob\ncharlie\ndavid\neve\n", new[] { "alice", "bob", "charlie", "david", "eve" })]
+        [InlineData("john\ndoe\nmichael\njane\nsmith\n", new[] { "john", "doe", "michael", "jane", "smith" })]
+        [Trait("TestGroup", "TestNameListOutput")]
 
-        public void Test_SanaManipulations(string input, string expectedOutput, string sana2Expected)
+        public void TestNameListOutput(string userInput, string[] expectedOutput)
         {
-            // Arrange: Simulate console input
-            var inputReader = new StringReader(input);
-            Console.SetIn(inputReader);
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw); // Redirect console output
 
-            var sw = new StringWriter();
-            Console.SetOut(sw);
+            var input = new StringReader(userInput);
+            Console.SetIn(input); // Redirect user input
 
-            // Act: Run the main program
-            HelloWorld.Program.Main(null);
+            // Act
+            HelloWorld.Program.Main(new string[0]); // Assuming the list logic is in Main
 
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                         .Where(line => !string.IsNullOrWhiteSpace(line))
-                         .ToArray();
+            // Get the console output, split by new lines, and remove empty or whitespace lines
+            var result = sw.ToString()
+                           .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                           .Where(line => !string.IsNullOrWhiteSpace(line)) // Remove any blank lines
+                           .ToArray();
 
+            // Skip the first line of the result, which contains the prompt "Anna 5 henkilön nimeä:"
+            var actualNames = result.Skip(1).ToArray();
 
-            // Assert: Verify output
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[4]), "Expected: " + expectedOutput
-                + " printed: " + result[4]);
-            Assert.True(LineContainsIgnoreSpaces(sana2Expected, result[6]), "Expected: " + expectedOutput
-                + " printed: " + result[6]);
+            // Ensure the number of lines matches
+            Assert.Equal(expectedOutput.Length, actualNames.Length);
+
+            // Compare each row of the expected and actual output
+            for (int i = 0; i < expectedOutput.Length; i++)
+            {
+                Assert.True(LineContainsIgnoreSpaces(expectedOutput[i], actualNames[i]),
+                    $"Expected line: '{expectedOutput[i]}', but got: '{actualNames[i]}'");
+            }
         }
-
-
-        private bool LineContainsIgnoreSpaces(string expectedText, string line)
+        private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
@@ -53,6 +61,7 @@ namespace HelloWorldTest
             // Check if the line matches the pattern, ignoring case
             return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
 
 
         private int CountWords(string line)
@@ -77,8 +86,10 @@ namespace HelloWorldTest
 
             return true;
         }
-
+        private string NormalizeOutput(string output)
+        {
+            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
+            return output.Replace("\r\n", "\n").Trim();
+        }
     }
 }
-
-

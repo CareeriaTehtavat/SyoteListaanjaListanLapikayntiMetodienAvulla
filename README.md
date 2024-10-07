@@ -1,4 +1,4 @@
-# Sanojen pilkkomista
+# Syöte listaan ja listan läpikäynti
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
@@ -7,23 +7,25 @@
 - Muu extra johdatteleva materiaali ja huomiot
  
 ## TEHTÄVÄNANTO
-- Laita konsoli tulostamaan Careeria kolmesti, siten että joka tulostuskerralla puuttuu kirjain. Ensimmäinen, viimeinen ja toinen kirjain. 
-- Laita konsoli pyytämään sanaa käyttäjältä ja sen jälkeen laita konsoli vaihtamaan sanan ensimmäisen ja viimeisen kirjaimen paikkaa ja tulostamaan sen. 
-- Nyt laita konsoli pyytämään uutta sanaa käyttäjältä ja laita se tulostamaan sen jälkeen kyseinen sana siten, että se tulostaa sanan ensimmäisen kirjaimen ennen ja jälkeen sanan. Esim: opiskelija = oopiskelijao
-- (Vinkki: substring)
+- Laita konsolisovellus pyytämään käyttäjältä henkilöiden nimiä, jonka jälkeen henkilön nimi tallennetaan List<string> henkilöt listaan. 
+	- Tip: for-silmukka, jossa on 5 silmukkan iteraatiota (läpikäyntiä) , silmukan sisällä kysytään käyttäjän syöte ja henkilö nimi tallennetaan listaan (henkilöt.Add(Console.ReadLine)).
+-Kun listalla on 5 henkilö, sovellus tulostaa listan henkilöistä konsoliin. (foreach)
+
 
 Esimerkkisuoritus:
 ```
-areeria
-careeri
-creeria
-Anna sana:
-Aniina
-aniinA
-Anna uusi sana:
+Anna 5 henkilön nimeä:
 Pekka
-PPekkaP
+Mauro
+Timur
+Olli
+Karina
 
+Pekka
+Mauro
+Timur
+Olli
+Karina
 ```
 
 > [!IMPORTANT]
