@@ -11,8 +11,11 @@ internal sealed class TestSet
 
         new DotnetTestGroup("TestAddNamesToList")
         {
-            Points = 100
+            Points = 50
+        }, new DotnetTestGroup("TestListPopulation")
+        {
+            Points = 50
         },
-       
+
     };
 }

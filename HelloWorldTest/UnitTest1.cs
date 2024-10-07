@@ -40,6 +40,8 @@ namespace HelloWorldTest
         }
 
         [Fact]
+        [Trait("TestGroup", "TestListPopulation")]
+
         public void TestListPopulation()
         {
             // Arrange
