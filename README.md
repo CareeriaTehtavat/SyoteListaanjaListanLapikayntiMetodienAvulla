@@ -1,25 +1,31 @@
-# Aut# Capsit vai ei?
+# Etsi kirjaimia tekstistä
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
-- Katso myös ensin if-else kirjallinen materiaali!
-- Muu extra johdatteleva materiaali ja huomiot
  
 ## TEHTÄVÄNANTO
-- Laita konsoli pyytämään käyttäjää syöttämään siihen: nimi, kotikaupunki, harrastus
-- Lisää metodiin ToLower tominto joka muuttaa nimen ja harrastuksen pieneksi tekstiksi ja kotikaupungin metodilla ToUpper capseilla kirjoitetuksi.
+- Tee sovellus, joka tarkistaa löytyykö jokin tietty sana tai kirjainpari alla olevasta lauseesta. (Älä siis etsi koko lausetta lauseesta, vaan sanaa tai muutamaa perättäistä kirjainta)
+string lause = "Ohjelmointi on hauskaa, helppoa ja osaan koodata todella hyvin! Ohjelmoinnissa ei ole yhtään haasteita ja pystyn mihin vain Kappa";
+(Vinkki: String, Contains)
+
+- Voit myös selvittää kuinka monta s-kirjainta lauseesta löytyy
+(Vinkki: String, Contains, Count)
 
 Esimerkkisuoritus:
 ```
-Anna nimi:
-PEKKKA
-Anna kotikaupunkisi:
-kouvola
-Anna harrastuksesi:
-FORTNite
+Kirjoita sana jota etsitään lauseesta:
+hauskaa
+Sana 'hauskaa' löytyy 1 kertaa
 
-pekkka, fortnite, KOUVOLA
+```
+
+Esimerkkisuoritus 2:
+```
+Kirjoita sana jota etsitään lauseesta:
+Minä
+Sana 'minä' ei löytynyt lauseesta
+
 
 ```
 > [!IMPORTANT]

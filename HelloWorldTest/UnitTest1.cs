@@ -8,49 +8,43 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("Matti", "JalkapaLLo", "Helsinki", "matti, jalkapallo, HELSINKI")]
-        [InlineData("Liisa", "Lukeminen", "Tampere", "liisa, lukeminen, TAMPERE")]
-        [InlineData("Pekka", "uimInen", "Oulu", "pekka, uiminen, OULU")]
-        [Trait("TestGroup", "Test_SanaManipulations")]
+        [InlineData("hauskaa\n",
+            "Sana 'hauskaa' loytyy 1 kertaa.")]
+        [InlineData("oppimaan\n",
+            "Sana 'oppimaan' ei lˆytynyt lauseesta.")]
+        [InlineData("kappa\n",
+            "Sana 'kappa' lˆytyy 1 kertaa.")]
+        [InlineData("se\n",
+            "Sana 'se' ei loytynyt lauseesta.")]
+        [InlineData("mahtava\n",
+            "Sana 'mahtava' ei loytynyt lauseesta.")]
+        [Trait("TestGroup", "Test_WordCountInSentence")]
 
-        public void Test_SanaManipulations(string nimi, string harrastus, string kaupunki, string expectedOutput)
+        public void Test_WordCountInSentence(string input, string expectedOutput)
         {
-            // Arrange: Simulate console input
-            var inputReader = new StringReader(nimi + '\n' + kaupunki + "\n" + harrastus + "\n");
+            // Arrange: Asetetaan syˆte ja tulosteen tallennus
+            var inputReader = new StringReader(input);
             Console.SetIn(inputReader);
 
-            var sw = new StringWriter();
-            Console.SetOut(sw);
+            var outputWriter = new StringWriter();
+            Console.SetOut(outputWriter);
 
-            // Act: Run the main program
+            // Act: Ajetaan ohjelma
             HelloWorld.Program.Main(null);
 
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                         .Where(line => !string.IsNullOrWhiteSpace(line))
-                         .ToArray();
+            // V‰hennet‰‰n turhat kehotukset ja verrataan vain olennaista tulostetta
+            var actualOutput = outputWriter.ToString();
 
+            // Suodatetaan pois kehotusrivit ("Kirjoita sana jota etsit‰‰n lauseesta:")
+            string filteredOutput = string.Join("\n", actualOutput
+                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                .Where(line => !line.StartsWith("Kirjoita sana jota etsit‰‰n lauseesta"))); // suodatetaan kehotusrivit
 
-            // Assert: Verify output
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[3]), "Expected: " + expectedOutput
-                + " printed: " + result[3]);
-
+            // Assert: Verrataan tulostetta odotettuun tulosteeseen
+            Assert.True(LineContainsIgnoreSpaces(expectedOutput, filteredOutput),
+                "Expected: " + expectedOutput + " Actual: " + filteredOutput);
         }
 
-
-        [Theory]
-        [InlineData("Matti", "JalkapaLLo", "Helsinki", "matti, jalkapallo, HELSINKI")]
-        [InlineData("Liisa", "Lukeminen", "Tampere", "liisa, lukeminen, TAMPERE")]
-        [InlineData("Pekka", "uimInen", "Oulu", "pekka, uiminen, OULU")]
-        [Trait("TestGroup", "Test_Muutos")]
-
-        public void Test_Muutos(string nimi, string harrastus, string kaupunki, string expectedOutput)
-        {
-            // Act
-            var result = HelloWorld.Program.Muutos(nimi, kaupunki, harrastus);
-
-            // Assert
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result));
-        }
 
         private bool LineContainsIgnoreSpaces(string expectedText, string line)
         {
@@ -95,4 +89,3 @@ namespace HelloWorldTest
 
     }
 }
-
