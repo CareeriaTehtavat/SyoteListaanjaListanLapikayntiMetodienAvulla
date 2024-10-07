@@ -9,7 +9,7 @@ namespace HelloWorldTest
     {
 
         [Fact]
-        [Trait("TestGroup", "List2")]
+        [Trait("TestGroup", "List")]
         public void List2()
         {
             // Arrange
