@@ -10,7 +10,7 @@ namespace HelloWorldTest
 
         [Fact]
         [Trait("TestGroup", "List")]
-        public void List2()
+        public void List()
         {
             // Arrange
             using var sw = new StringWriter();
