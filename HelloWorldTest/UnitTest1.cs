@@ -9,10 +9,11 @@ namespace HelloWorldTest
     {
 
         [Theory]
-        [InlineData("Toyota\nHonda\nFord\nBMW\nTesla\n", "Toyota", "Honda", "Ford", "BMW", "Tesla")]
-        [InlineData("BMW\nJaguar\nAudi\nMercedes\nVolvo\n", "BMW", "Jaguar", "Audi", "Mercedes", "Volvo")]
-        [Trait("TestGroup", "AutoList")]
-        public void AutoList(string userInput, string brand1, string brand2, string brand3, string brand4, string brand5)
+        [InlineData("Toyota\nHonda\nFord\nBMW\nTesla\nX\n", "Kiitos listan tayttamisesta!")]
+        [InlineData("BMW\nJaguar\nAudi\nMercedes\nVolvo\nx\n", "Kiitos listan tayttamisesta!")]
+        [Trait("TestGroup", "AutoList_AddFiveBrands")]
+
+        public void AutoList_AddFiveBrands(string userInput, string expectedOutput)
         {
             // Arrange
             using var sw = new StringWriter();
@@ -26,30 +27,26 @@ namespace HelloWorldTest
             HelloWorld.Program.Main(new string[0]); // Run the Main method
 
             // Get the console output
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            var result = sw.ToString();
 
-            // Debug output to see the actual result
-            for (int i = 0; i < result.Length; i++)
-            {
-                Console.WriteLine($"Line {i}: '{result[i]}'");
-            }
-
-            // Assert the output contains the 5 expected car brands
-            Assert.True(result.Length >= 8, "The output does not contain enough lines.");
-
-            // Check that the console output lists the car brands correctly
-            Assert.Contains(brand1, result);
-            Assert.Contains(brand2, result);
-            Assert.Contains(brand3, result);
-            Assert.Contains(brand4, result);
-            Assert.Contains(brand5, result);
+            // Assert that the output matches the expected output
+            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result));
         }
-        private bool LineContainsIgnoreSpaces(string line, string expectedText)
+        private bool LineContainsIgnoreSpaces(string expectedText, string line)
         {
-            // Remove all whitespace from the line and the expected text
-            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
-            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
-            return normalizedLine.Contains(normalizedExpectedText);
+            // Remove all whitespace and convert to lowercase
+            string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
+            string normalizedExpectedText = Regex.Replace(expectedText, @"[\s.,]+", "").ToLower();
+
+            // Create a regex pattern to allow any character for "ä", "ö", "a", and "o"
+            string pattern = Regex.Escape(normalizedExpectedText)
+                                  .Replace("ö", ".")  // Allow any character for "ö"
+                                  .Replace("ä", ".")  // Allow any character for "ä"
+                                  .Replace("a", ".")  // Allow any character for "a"
+                                  .Replace("o", ".");  // Allow any character for "o"
+
+            // Check if the line matches the pattern, ignoring case
+            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
 
 
