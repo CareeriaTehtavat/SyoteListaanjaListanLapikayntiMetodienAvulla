@@ -7,31 +7,51 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
+        [Theory]
+        [InlineData("Matti", "JalkapaLLo", "Helsinki", "matti, jalkapallo, HELSINKI")]
+        [InlineData("Liisa", "Lukeminen", "Tampere", "liisa, lukeminen, TAMPERE")]
+        [InlineData("Pekka", "uimInen", "Oulu", "pekka, uiminen, OULU")]
+        [Trait("TestGroup", "Test_SanaManipulations")]
+
+        public void Test_SanaManipulations(string nimi, string harrastus, string kaupunki, string expectedOutput)
+        {
+            // Arrange: Simulate console input
+            var inputReader = new StringReader(nimi + '\n' + kaupunki + "\n" + harrastus + "\n");
+            Console.SetIn(inputReader);
+
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            // Act: Run the main program
+            HelloWorld.Program.Main(null);
+
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                         .Where(line => !string.IsNullOrWhiteSpace(line))
+                         .ToArray();
+
+
+            // Assert: Verify output
+            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[3]), "Expected: " + expectedOutput
+                + " printed: " + result[3]);
+
+        }
+
 
         [Theory]
-        [InlineData("Toyota\nHonda\nFord\nBMW\nTesla\nX\n", "Kiitos listan tayttamisesta!")]
-        [InlineData("BMW\nJaguar\nAudi\nMercedes\nVolvo\nx\n", "Kiitos listan tayttamisesta!")]
-        [Trait("TestGroup", "AutoList_AddFiveBrands")]
+        [InlineData("Matti", "JalkapaLLo", "Helsinki", "matti, jalkapallo, HELSINKI")]
+        [InlineData("Liisa", "Lukeminen", "Tampere", "liisa, lukeminen, TAMPERE")]
+        [InlineData("Pekka", "uimInen", "Oulu", "pekka, uiminen, OULU")]
+        [Trait("TestGroup", "Test_Muutos")]
 
-        public void AutoList_AddFiveBrands(string userInput, string expectedOutput)
+        public void Test_Muutos(string nimi, string harrastus, string kaupunki, string expectedOutput)
         {
-            // Arrange
-            using var sw = new StringWriter();
-            Console.SetOut(sw); // Capture console output
-
-            // Simulate user input for car brands
-            var input = new StringReader(userInput);
-            Console.SetIn(input); // Mock the user input
-
             // Act
-            HelloWorld.Program.Main(new string[0]); // Run the Main method
+            var result = HelloWorld.Program.Muutos(nimi, kaupunki, harrastus);
 
-            // Get the console output
-            var result = sw.ToString();
-
-            // Assert that the output matches the expected output
+            // Assert
             Assert.True(LineContainsIgnoreSpaces(expectedOutput, result));
         }
+
         private bool LineContainsIgnoreSpaces(string expectedText, string line)
         {
             // Remove all whitespace and convert to lowercase
@@ -72,10 +92,7 @@ namespace HelloWorldTest
 
             return true;
         }
-        private string NormalizeOutput(string output)
-        {
-            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
-            return output.Replace("\r\n", "\n").Trim();
-        }
+
     }
 }
+

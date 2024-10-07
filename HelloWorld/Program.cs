@@ -4,8 +4,12 @@
     {
         public static void Main(string[] args)
         {
-            //Koodi tähän
            
+        }
+
+        public static string Muutos(string nimi, string kotikaupunki, string harrastus)
+        {
+            return "";
         }
     }
 }
