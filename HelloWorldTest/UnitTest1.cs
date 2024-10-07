@@ -7,37 +7,46 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
+        [Theory]
+        [InlineData("auto\nvene\nkukka\nlopeta\n",
+             "Sanassa on parillinen maara kirjaimia\nSanassa on parillinen maara kirjaimia\nSanassa on pariton maara kirjaimia\n")]
 
-        [Fact]
-        public void TestNumerolistaFirstFifthAndTenthPrintedCorrectly()
+        [InlineData("omena\nomena\nomena\nlopeta\n",
+            "Sanassa on pariton maara kirjaimia\nSanassa on pariton maara kirjaimia\nSanassa on pariton maara kirjaimia\n")]
+        [Trait("TestGroup", "Test_MultipleWords_And_ExitCondition")]
+
+        public void Test_MultipleWords_And_ExitCondition(string input, string expectedOutput)
         {
-            // Arrange
-            using var sw = new StringWriter();
-            Console.SetOut(sw); // Capture console output
+            // Arrange: Asetetaan syöte ja tulosteen tallennus
+            var inputReader = new StringReader(input);
+            Console.SetIn(inputReader);
 
-            // Simulate user input of 10 numbers
-            var simulatedInput = new StringReader("1\n2\n3\n4\n5\n6\n7\n8\n9\n10");
-            Console.SetIn(simulatedInput);
+            var outputWriter = new StringWriter();
+            Console.SetOut(outputWriter);
 
-            // Act
-            HelloWorld.Program.Main(new string[0]); // Call Main method
+            // Act: Ajetaan ohjelma
+            HelloWorld.Program.Main(null);
 
-            // Capture output and split it by line
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            // Vähennetään turhat kehotukset ja verrataan vain olennaista tulostetta
+            var actualOutput = outputWriter.ToString();
 
-            // Assert: Checking the correct numbers printed for 1st, 5th, and 10th
-            Assert.True(LineContainsIgnoreSpaces("Syota listalle lukuja, kunnes lista on valmis (10kpl)", result[0]));
-            Assert.True(LineContainsIgnoreSpaces("Listan ensimmainen, viides ja kymmenes luku:", result[1]));
-            Assert.Equal("1", result[2]);  // First number
-            Assert.Equal("5", result[3]);  // Fifth number
-            Assert.Equal("10", result[4]); // Tenth number
+            // Suodatetaan pois kehotusrivit ("Syötä sana...")
+            string filteredOutput = string.Join("\n", actualOutput
+                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                .Where(line => !line.StartsWith("Syötä sana"))); // suodatetaan kehotusrivit
+
+            // Assert: Verrataan tulostetta odotettuun tulosteeseen
+            Assert.True(LineContainsIgnoreSpaces(expectedOutput, filteredOutput), "Expected: " + expectedOutput
+                + " Actual: " + actualOutput);
         }
 
-        private bool LineContainsIgnoreSpaces(string line, string expectedText)
+
+
+        private bool LineContainsIgnoreSpaces(string expectedText, string line)
         {
             // Remove all whitespace and convert to lowercase
-            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
-            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
+            string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
+            string normalizedExpectedText = Regex.Replace(expectedText, @"[\s.,]+", "").ToLower();
 
             // Create a regex pattern to allow any character for "ä", "ö", "a", and "o"
             string pattern = Regex.Escape(normalizedExpectedText)
@@ -73,12 +82,6 @@ namespace HelloWorldTest
 
             return true;
         }
-        private string NormalizeOutput(string output)
-        {
-            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
-            return output.Replace("\r\n", "\n").Trim();
-        }
+
     }
 }
-
-
