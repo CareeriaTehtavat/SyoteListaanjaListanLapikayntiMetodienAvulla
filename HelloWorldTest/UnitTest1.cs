@@ -8,42 +8,37 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("hauskaa\n",
-            "Sana 'hauskaa' loytyy 1 kertaa.")]
-        [InlineData("oppimaan\n",
-            "Sana 'oppimaan' ei lˆytynyt lauseesta.")]
-        [InlineData("kappa\n",
-            "Sana 'kappa' lˆytyy 1 kertaa.")]
-        [InlineData("se\n",
-            "Sana 'se' ei loytynyt lauseesta.")]
-        [InlineData("mahtava\n",
-            "Sana 'mahtava' ei loytynyt lauseesta.")]
-        [Trait("TestGroup", "Test_WordCountInSentence")]
+        [InlineData("15", "2", "5", "Suurin luku on: 15", "Pienin luku on: 2")]
+        [InlineData("2", "345", "1987", "Suurin luku on: 1987", "Pienin luku on: 2")]
+        [InlineData("33", "66", "12", "Suurin luku on: 66", "Pienin luku on: 12")]
+        [Trait("TestGroup", "Test_SanaManipulations")]
 
-        public void Test_WordCountInSentence(string input, string expectedOutput)
+        public void Test_SanaManipulations(string nimi, string harrastus, string kaupunki, string expectedOutput, string pieninOutput)
         {
-            // Arrange: Asetetaan syˆte ja tulosteen tallennus
-            var inputReader = new StringReader(input);
+            // Arrange: Simulate console input
+            var inputReader = new StringReader(nimi + '\n' + kaupunki + "\n" + harrastus + "\n");
             Console.SetIn(inputReader);
 
-            var outputWriter = new StringWriter();
-            Console.SetOut(outputWriter);
+            var sw = new StringWriter();
+            Console.SetOut(sw);
 
-            // Act: Ajetaan ohjelma
+            // Act: Run the main program
             HelloWorld.Program.Main(null);
 
-            // V‰hennet‰‰n turhat kehotukset ja verrataan vain olennaista tulostetta
-            var actualOutput = outputWriter.ToString();
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                         .Where(line => !string.IsNullOrWhiteSpace(line))
+                         .ToArray();
 
-            // Suodatetaan pois kehotusrivit ("Kirjoita sana jota etsit‰‰n lauseesta:")
-            string filteredOutput = string.Join("\n", actualOutput
-                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                .Where(line => !line.StartsWith("Kirjoita sana jota etsit‰‰n lauseesta"))); // suodatetaan kehotusrivit
 
-            // Assert: Verrataan tulostetta odotettuun tulosteeseen
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, filteredOutput),
-                "Expected: " + expectedOutput + " Actual: " + filteredOutput);
+            // Assert: Verify output
+            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[3]), "Expected: " + expectedOutput
+                + " printed: " + result[3]);
+            Assert.True(LineContainsIgnoreSpaces(pieninOutput, result[4]), "Expected: " + pieninOutput
+                + " printed: " + result[4]);
+
         }
+
+
 
 
         private bool LineContainsIgnoreSpaces(string expectedText, string line)
@@ -89,3 +84,4 @@ namespace HelloWorldTest
 
     }
 }
+
