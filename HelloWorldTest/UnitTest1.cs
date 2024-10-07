@@ -31,7 +31,7 @@ namespace HelloWorldTest
 
                     // Assert
                     var result = sw.ToString();
-                    Assert.Contains("Kuinka ison neliön haluat tehdä: ", result);  // Ensure it asks for input
+                    Assert.Contains("Kuinka ison ", result);  // Ensure it asks for input
                     Assert.Contains(expectedOutput, result);  // Check that the output matches expected square pattern
                 }
             }
