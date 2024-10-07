@@ -1,27 +1,15 @@
-# Pelilistan tulostus
+# Pelilistan tulostus Vol2
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
-- Katso pelilista vol1 harjoitusta
-- Tiettyä elementtiä listalla voit kutsua: listannimi[i] (i viittaa siis listan indeksilukuun)
-- Muista, että listan indeksissä ensimmäinen luku on 0, eli listan ensimmäinen elementti löytyy indeksistä 0
+- Voit käyttää tässä pohjana Lista-osion Pelilistan tulostus harjoitusta 
+ 
 ## TEHTÄVÄNANTO
-- Voit käyttää "Pelilista" harjoituksessa tekemääsi ohjelmakoodia pohjalla, mikäli säilytit sen.
-- Nyt pelilistan sisällöt tulostetaan konsoliin WriteLine toimintoa hyödyntäen ensin syöttöjärjestyksessä, sitten vielä toisinpäin.
-- Esimerkkituloste alla
-
-```
-AC Valhalla
-Far Cry 6
-Apex Legends
-jne..
-
-jne..
-Apex Legends
-Far Cry 6
-AC Valhalla
-```
+- Käytä joko edellisen osion aikana tekemääsi harjoitusta "Pelilistan tulostus", tai tee uusi pelilista jolle lisäät pelejä.
+- Tee foreach looppi, joka tulostaa jokaisen listan elementin kunnes kaikki listan elementit on käyty läpi. 
+- foreach(listanTyyppi xyz in listanNimi) eli numerolistan kanssa voisi olla foreach(int i in numerolista) ja sanalistan kanssa foreach(string s in sanalista). foreachin ehdon jälkeen tulee lohko, kuten ifissäkin, jonka sisällä on koodi joka toteutetaan foreachin kierron joka kierroksella.
+- Tuloste on käytännössä sama, kuin pelilista vol2 alkuosa, mutta vain yhdellä rivillä foreachin sisällä toteutettuna.
 
 
 > [!IMPORTANT]

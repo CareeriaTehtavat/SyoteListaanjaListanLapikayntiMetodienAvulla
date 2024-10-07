@@ -7,36 +7,33 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
+
         [Fact]
-        [Trait("TestGroup", "List")]
-        public void List()
+        [Trait("TestGroup", "TestConsoleOutput")]
+
+        public void TestConsoleOutput()
         {
             // Arrange
             using var sw = new StringWriter();
             Console.SetOut(sw); // Capture console output
 
             // Act
-            HelloWorld.Program.Main(new string[0]); // Assuming the list logic is in Main
+            HelloWorld.Program.Main(new string[0]); // Run the Main method
 
             // Get the console output
-            var result = sw.ToString();
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            // Assert that the output is not empty and contains text
-            Assert.False(string.IsNullOrWhiteSpace(result), "Expected some text to be printed, but output was empty or whitespace only.");
+            // Debug output to see the actual result
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.WriteLine($"Line {i}: '{result[i]}'");
+            }
 
-            var lines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                              .Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
-
-            // We assume that the first half of the list is printed in original order, followed by the reverse
-            int listEnd = lines.Length / 2; // Since it's printed twice, the mid-point splits them
-
-            var firstHalf = lines.Take(listEnd).ToArray(); // The list in the original order
-            var secondHalf = lines.Skip(listEnd).Take(listEnd).ToArray(); // The list in reverse order
-
-            // Assert that the second half is the reverse of the first half
-            Assert.Equal(firstHalf.Reverse(), secondHalf);
+            // Check if there are more than 2 lines
+            Assert.True(result.Length > 2, "The output does not contain more than 2 lines.");
+            Assert.False(string.IsNullOrWhiteSpace(result[0]), "One of the lines does not contain any text.");
+            Assert.False(string.IsNullOrWhiteSpace(result[1]), "One of the lines does not contain any text.");
         }
-
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace from the line and the expected text
@@ -44,6 +41,7 @@ namespace HelloWorldTest
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
             return normalizedLine.Contains(normalizedExpectedText);
         }
+
 
         private int CountWords(string line)
         {
@@ -67,7 +65,6 @@ namespace HelloWorldTest
 
             return true;
         }
-
         private string NormalizeOutput(string output)
         {
             // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
