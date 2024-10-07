@@ -1,28 +1,31 @@
-# Pelilista
+# Automerkit
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
 - Katso apuja myös edellisistä tehtävistä.
-- Lista alustetaan kuten muuttujatkin, muuttujaa alustaessa annetaan muuttujan tyyppi (esim string) ja listaa alustaessa annetaan listan tyyppi (List<string>). Aivan kuten muuttujalle annetaan nimi (esim. merkkijono -> string merkkijono) yhtälailla listallekin annetaan nimi (listannimi -> List<string> listannimi). Pelkän alustamisen sijaan, lista tarvitsee vielä luoda new List<string>(); toiminnolla.
-    - List<string> listannimi = new List<string>();
 ## TEHTÄVÄNANTO
-- Alusta ensin lista suosikkipeleillesi 
-- Lisää listalle pelejä ohjelmakoodissa suoratekstinä Add toimintoa käyttäen 
-- Tässä tehtävässä ei vielä luoda tulostetta, mutta jos se luotaisiin se voisi näyttää seuraavalta
+- Huom! Alkuperäisestä sanoituksesta ei käynyt ilmi tarkalleen, mitä tehtävässä tarkemmin tehdään. Muista kertoa opelle, jos teit tehtävän alkuperäisen sanoituksen pohjalta (ei mainintaa while tai if lauseista). 
 
+- Luo konsolisovellukseen tyhjä lista automerkeistä. Pyydä käyttäjää lisäämään 5 merkkiä listalle. Luo myös lukumuuttuja kierrokset
+- Tee nyt while toiminto, jonka ehto on true. Tee seuraavat whilen sisälle:
+	- Tee ReadLine toiminto, jolla listalle voi lisätä sanoja.
+	- Tee if lause, joka tarkistaa onko kierrokset arvoltaan 5. Jos kierrokset on arvoltaan 5, while breikkaa 
+	- Laita kierrokset muuttujan arvo kasvamaan yhdellä (kierrokset++ tai kierrokset = kierrokset+1) 
+- Tulosta kaikki listan 5 tallennettua elementtiä whilen lohkon jälkeen WriteLine toiminnoilla (Console.WriteLine(lista[i]); jolloin i viittaa alkion järjestysnumeroon listalla)
+- Esimerkkituloste:
 
-  
 ```
-AC Valhalla
-Far Cry 6
-Apex Legends
-jne..
+Lisää listalle viisi automerkkiä
+BMW
+Mercedes
+Toyota
+Porshe
+Ferrari
+
+Syötit listalle 5 merkkiä, tässä lista:
+BMW
+Mercedes
+Toyota
+Porshe
+Ferrari
 ```
-
-
-> [!IMPORTANT]
-> Koodin kirjoittamisen johdanto
-1. Kloonaa projekti omalle koneellesi.
-2. Avaa `ConsoleApp.sln`.
-3. Solution-ikkunasta valitse "ConsoleApp".
-4. Pääkoodi löytyy `Program.cs`-tiedostosta. Jos tarvitset, luo uudet itemit `ConsoleApp`-projektiin.

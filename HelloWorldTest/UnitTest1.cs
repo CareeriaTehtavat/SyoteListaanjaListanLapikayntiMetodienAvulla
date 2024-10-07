@@ -8,13 +8,19 @@ namespace HelloWorldTest
     public class UnitTest1
     {
 
-        [Fact]
-        [Trait("TestGroup", "InputValidation")]
-        public void TestConsoleOutputContainsMoreThanTwoLinesWithText()
+        [Theory]
+        [InlineData("Toyota\nHonda\nFord\nBMW\nTesla\n", "Toyota", "Honda", "Ford", "BMW", "Tesla")]
+        [InlineData("BMW\nJaguar\nAudi\nMercedes\nVolvo\n", "BMW", "Jaguar", "Audi", "Mercedes", "Volvo")]
+        [Trait("TestGroup", "AutoList")]
+        public void AutoList(string userInput, string brand1, string brand2, string brand3, string brand4, string brand5)
         {
             // Arrange
             using var sw = new StringWriter();
             Console.SetOut(sw); // Capture console output
+
+            // Simulate user input for car brands
+            var input = new StringReader(userInput);
+            Console.SetIn(input); // Mock the user input
 
             // Act
             HelloWorld.Program.Main(new string[0]); // Run the Main method
@@ -28,10 +34,15 @@ namespace HelloWorldTest
                 Console.WriteLine($"Line {i}: '{result[i]}'");
             }
 
-            // Check if there are more than 2 lines
-            Assert.True(result.Length > 2, "The output does not contain more than 2 lines.");
-            Assert.False(string.IsNullOrWhiteSpace(result[0]), "One of the lines does not contain any text.");
-            Assert.False(string.IsNullOrWhiteSpace(result[1]), "One of the lines does not contain any text.");
+            // Assert the output contains the 5 expected car brands
+            Assert.True(result.Length >= 8, "The output does not contain enough lines.");
+
+            // Check that the console output lists the car brands correctly
+            Assert.Contains(brand1, result);
+            Assert.Contains(brand2, result);
+            Assert.Contains(brand3, result);
+            Assert.Contains(brand4, result);
+            Assert.Contains(brand5, result);
         }
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
