@@ -7,55 +7,73 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-        [Theory]
-        [InlineData("4\n", new[] { "Anna luku: Kertotaulu luvulle 4:", "1 * 4 = 4", "2 * 4 = 8", "3 * 4 = 12", "4 * 4 = 16", "5 * 4 = 20", "6 * 4 = 24", "7 * 4 = 28", "8 * 4 = 32", "9 * 4 = 36", "10 * 4 = 40" })]
-        [InlineData("3\n", new[] { "Anna luku: Kertotaulu luvulle 3:", "1 * 3 = 3", "2 * 3 = 6", "3 * 3 = 9", "4 * 3 = 12", "5 * 3 = 15", "6 * 3 = 18", "7 * 3 = 21", "8 * 3 = 24", "9 * 3 = 27", "10 * 3 = 30" })]
-        [Trait("TestGroup", "TestMainMethod_OutputForGivenInput")]
+        [Fact]
+        [Trait("TestGroup", "Main_ShouldPrintSquare_WhenUserProvidesInput")]
 
-        public void TestMainMethod_OutputForGivenInput(string userInput, string[] expectedOutput)
+        public void Main_ShouldPrintSquare_WhenUserProvidesInput()
         {
             // Arrange
-            using var sw = new StringWriter();
-            Console.SetOut(sw); // Capture console output
+            var input = "5";  // Simulating user input of 5
+            var expectedOutput = "*****\n*   *\n*   *\n*   *\n*****\n";
 
-            using var sr = new StringReader(userInput);
-            Console.SetIn(sr); // Simulate user input
-
-            // Act
-            HelloWorld.Program.Main(new string[0]);
-
-            // Get the console output, split by new lines, and remove empty or whitespace lines
-            var result = sw.ToString()
-                            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                            .Where(line => !string.IsNullOrWhiteSpace(line)) // Remove any blank lines
-                            .ToArray();
-
-            // Ensure the number of lines matches
-            //Assert.Equal(expectedOutput.Length, result.Length);
-
-            // Compare each row of the expected and actual output
-            for (int i = 0; i < expectedOutput.Length; i++)
+            // Redirect input
+            using (var sr = new StringReader(input))
             {
-                Assert.True(LineContainsIgnoreSpaces(result[i], expectedOutput[i]),
-                    $"Expected line: '{expectedOutput[i]}', but got: '{result[i]}'");
+                Console.SetIn(sr);
+
+                // Redirect output
+                using (var sw = new StringWriter())
+                {
+                    Console.SetOut(sw);
+
+                    // Act
+                    HelloWorld.Program.Main(new string[0]);
+
+                    // Assert
+                    var result = sw.ToString();
+                    Assert.Contains("Kuinka ison neliön haluat tehdä: ", result);  // Ensure it asks for input
+                    Assert.Contains(expectedOutput, result);  // Check that the output matches expected square pattern
+                }
+            }
+        }
+        [Theory]
+        [InlineData(3, new[] { "***", "* *", "***" })]
+        [InlineData(4, new[] { "****", "*  *", "*  *", "****" })]
+        [InlineData(5, new[] { "*****", "*   *", "*   *", "*   *", "*****" })]
+        [Trait("TestGroup", "TulostaNelio_ShouldPrintCorrectSquare")]
+
+        public void TulostaNelio_ShouldPrintCorrectSquare(int sivunPituus, string[] expectedLines)
+        {
+            // Redirect output to capture the printed square
+            using (var sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+
+                // Act
+                HelloWorld.Program.TulostaNeliö(sivunPituus);
+
+                // Assert
+                var result = sw.ToString();
+
+                // Split the result by newlines and remove any empty lines at the end
+                var resultLines = result.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Ensure that the number of rows matches the expected number of rows
+                Assert.Equal(expectedLines.Length, resultLines.Length);
+
+                // Check if each row contains the expected number of stars
+                for (int i = 0; i < expectedLines.Length; i++)
+                {
+                    var expectedRow = expectedLines[i].Replace(" ", "");
+                    var actualRow = resultLines[i].Replace(" ", "");
+
+                    // Assert that the number of stars in the actual row matches the expected number of stars
+                    Assert.Equal(expectedRow, actualRow);
+                }
             }
         }
 
-        [Theory]
-        [InlineData(3, 4, "3 * 4 = 12")]
-        [InlineData(5, 6, "5 * 6 = 30")]
-        [InlineData(10, 10, "10 * 10 = 100")]
-        [Trait("TestGroup", "TestKertolaskukaavalla")]
-
-        public void TestKertolaskukaavalla(int luku1, int luku2, string expectedOutput)
-        {
-            // Act
-            string result = HelloWorld.Program.Kertolaskukaavalla(luku1, luku2);
-
-            // Assert
-            Assert.True(LineContainsIgnoreSpaces(result, expectedOutput), $"Expected:\n{expectedOutput}\nBut got:\n{result}");
-        }
-        private bool LineContainsIgnoreSpaces(string line, string expectedText)
+        private bool LineContainsIgnoreSpaces(string expectedText, string line)
         {
             // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
@@ -71,7 +89,6 @@ namespace HelloWorldTest
             // Check if the line matches the pattern, ignoring case
             return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
-
 
 
         private int CountWords(string line)
@@ -96,10 +113,8 @@ namespace HelloWorldTest
 
             return true;
         }
-        private string NormalizeOutput(string output)
-        {
-            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
-            return output.Replace("\r\n", "\n").Trim();
-        }
+
     }
 }
+
+

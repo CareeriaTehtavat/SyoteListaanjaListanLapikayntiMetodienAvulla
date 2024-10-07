@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HelloWorld
+﻿namespace HelloWorld
 {
     public class Program
     {
@@ -10,10 +7,9 @@ namespace HelloWorld
            
         }
 
-        public static string Kertolaskukaavalla(int luku1, int luku2)
+        public static void TulostaNeliö(int sivunPituus)
         {
-           
-            return "";
+         
         }
     }
 }
