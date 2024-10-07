@@ -8,14 +8,26 @@ internal sealed class TestSet
 
     public IReadOnlyList<Test> Tests => new Test[]
     {
-        
-        new DotnetTestGroup("Main_ShouldPrintSquare_WhenUserProvidesInput")
+
+        new DotnetTestGroup("NumeromuuttujillaPeruslaskut")
         {
-            Points = 50
+            Points = 60
         },
-        new DotnetTestGroup("TulostaNelio_ShouldPrintCorrectSquare")
+        new DotnetTestGroup("ErotusTest")
         {
-            Points = 50
+            Points = 10
+
+        }, new DotnetTestGroup("OsamaaraTest")
+        {
+            Points = 10
+
+        },new DotnetTestGroup("TuloTest")
+        {
+            Points = 10
+
+        },new DotnetTestGroup("TestSumma")
+        {
+            Points = 10
         },
     };
 }

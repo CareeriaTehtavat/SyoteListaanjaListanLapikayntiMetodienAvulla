@@ -7,70 +7,114 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
+        // Additional Unit Test for validating output structure
         [Fact]
-        [Trait("TestGroup", "Main_ShouldPrintSquare_WhenUserProvidesInput")]
-
-        public void Main_ShouldPrintSquare_WhenUserProvidesInput()
+        [Trait("TestGroup", "NumeromuuttujillaPeruslaskut")]
+        public void NumeromuuttujillaPeruslaskut()
         {
             // Arrange
-            var input = "5";  // Simulating user input of 5
-            var expectedOutput = "*****\n*   *\n*   *\n*   *\n*****\n";
+            using var sw = new StringWriter();
+            Console.SetOut(sw);
 
-            // Redirect input
-            using (var sr = new StringReader(input))
-            {
-                Console.SetIn(sr);
+            // Act
+            HelloWorld.Program.Main(new string[0]);
 
-                // Redirect output
-                using (var sw = new StringWriter())
-                {
-                    Console.SetOut(sw);
+            // Get console output
+            var result = sw.ToString().TrimEnd();
+            var resultLines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-                    // Act
-                    HelloWorld.Program.Main(new string[0]);
+            // Expected values (you can adjust these based on actual numbers in "numerot")
+            string expectedSum = "Summa: 12";
+            string expectedDiff = "Erotus: -6";
+            string expectedQuotient = "Osamaara: 0.15";
+            string expectedProduct = "Tulo: 60";
 
-                    // Assert
-                    var result = sw.ToString();
-                    Assert.Contains("Kuinka ison ", result);  // Ensure it asks for input
-                    Assert.Contains(expectedOutput, result);  // Check that the output matches expected square pattern
-                }
-            }
+            // Assert that each line matches the expected value, allowing for flexibility with dots or commas
+            Assert.True(LineContainsIgnoreSpaces(expectedSum, resultLines[0]), $"Expected: {expectedSum}, Actual: {resultLines[0]}");
+            Assert.True(LineContainsIgnoreSpaces(expectedDiff, resultLines[1]), $"Expected: {expectedDiff}, Actual: {resultLines[1]}");
+            Assert.True(LineContainsIgnoreSpaces(expectedQuotient, resultLines[2]), $"Expected: {expectedQuotient}, Actual: {resultLines[2]}");
+            Assert.True(LineContainsIgnoreSpaces(expectedProduct, resultLines[3]), $"Expected: {expectedProduct}, Actual: {resultLines[3]}");
         }
-        [Theory]
-        [InlineData(3, new[] { "***", "* *", "***" })]
-        [InlineData(4, new[] { "****", "*  *", "*  *", "****" })]
-        [InlineData(5, new[] { "*****", "*   *", "*   *", "*   *", "*****" })]
-        [Trait("TestGroup", "TulostaNelio_ShouldPrintCorrectSquare")]
-
-        public void TulostaNelio_ShouldPrintCorrectSquare(int sivunPituus, string[] expectedLines)
+        [Fact]
+        [Trait("TestGroup", "TestSumma")]
+        public void TestSummaFunction()
         {
-            // Redirect output to capture the printed square
-            using (var sw = new StringWriter())
-            {
-                Console.SetOut(sw);
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw);
 
-                // Act
-                HelloWorld.Program.TulostaNelio(sivunPituus);
+            // Act
+            HelloWorld.Program.Summa(new int[] { 10, 3, 2 });
 
-                // Assert
-                var result = sw.ToString();
+            // Get the output that was written to the console
+            var result = sw.ToString().TrimEnd();
+            string expectedDifference = "Summa: 15";
 
-                // Split the result by newlines and remove any empty lines at the end
-                var resultLines = result.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            // Assert: Check if the result matches the expected difference output
+            Assert.True(LineContainsIgnoreSpaces(expectedDifference, result),
+                $"Expected: {expectedDifference}, Actual: {result}");
+        }
 
-                // Ensure that the number of rows matches the expected number of rows
-                Assert.Equal(expectedLines.Length, resultLines.Length);
+        [Fact]
+        [Trait("TestGroup", "ErotusTest")]
+        public void TestErotusFunction()
+        {
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw);
 
-                // Check if each row contains the expected number of stars
-                for (int i = 0; i < expectedLines.Length; i++)
-                {
-                    var expectedRow = expectedLines[i].Replace(" ", "");
-                    var actualRow = resultLines[i].Replace(" ", "");
+            // Act
+            HelloWorld.Program.Erotus(new int[] { 10, 3, 2 });
 
-                    // Assert that the number of stars in the actual row matches the expected number of stars
-                    Assert.Equal(expectedRow, actualRow);
-                }
-            }
+            // Get the output that was written to the console
+            var result = sw.ToString().TrimEnd();
+            string expectedDifference = "Erotus: 5";
+
+            // Assert: Check if the result matches the expected difference output
+            Assert.True(LineContainsIgnoreSpaces(expectedDifference, result),
+                $"Expected: {expectedDifference}, Actual: {result}");
+        }
+
+        // Test for Osamaara function
+        [Fact]
+        [Trait("TestGroup", "OsamaaraTest")]
+        public void TestOsamaaraFunction()
+        {
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            // Act
+            HelloWorld.Program.Osamaara(new int[] { 12, 2, 4 });
+
+            // Get the output that was written to the console
+            var result = sw.ToString().TrimEnd();
+            string expectedQuotient = "Osamaara: 1.5";
+
+            // Assert: Check if the result matches the expected quotient output
+            Assert.True(LineContainsIgnoreSpaces(expectedQuotient, result),
+                $"Expected: {expectedQuotient}, Actual: {result}");
+        }
+
+        // Test for Tulo function
+        [Fact]
+        [Trait("TestGroup", "TuloTest")]
+        public void TestTuloFunction()
+        {
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            // Act
+            HelloWorld.Program.Tulo(new int[] { 3, 4, 5 });
+
+            // Get the output that was written to the console
+            var result = sw.ToString().TrimEnd();
+            string expectedProduct = "Tulo: 60";
+
+            // Assert: Check if the result matches the expected product output
+            Assert.True(LineContainsIgnoreSpaces(expectedProduct, result),
+                $"Expected: {expectedProduct}, Actual: {result}");
         }
 
         private bool LineContainsIgnoreSpaces(string expectedText, string line)
