@@ -1,4 +1,3 @@
-
 using HelloWorld; // Ensure this is the correct namespace for the Program class
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Reflection;
@@ -10,49 +9,37 @@ namespace HelloWorldTest
     {
 
         [Fact]
-        // Input: 6 (valid from the start)
-        [Trait("TestGroup", "TestUserInput")]
-
-        public void TestUserInput()
+        [Trait("TestGroup", "List2")]
+        public void List2()
         {
+            // Arrange
             using var sw = new StringWriter();
-            Console.SetOut(sw); // Redirect console output
+            Console.SetOut(sw); // Capture console output
 
             // Act
-            HelloWorld.Program.Main(new string[0]);
+            HelloWorld.Program.Main(new string[0]); // Assuming the game list logic is in Main
 
-            // Assert
-            var result = sw.ToString().Trim(); // Get console output and trim any extra spaces/newlines
-            var expectedOutput = GenerateExpectedOddNumbersOutput();
-            Assert.Equal(expectedOutput, result); // Compare the output
+            // Get the console output
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
+
+            // We assume that the first half of the list is printed in original order, followed by the reverse
+            int listEnd = result.Length / 2; // Since it's printed twice, the mid-point splits them
+
+            var firstHalf = result.Take(listEnd).ToArray(); // The list in the original order
+            var secondHalf = result.Skip(listEnd).Take(listEnd).ToArray(); // The list in reverse order
+
+            // Assert that the second half is the reverse of the first half
+            Assert.Equal(firstHalf.Reverse(), secondHalf);
         }
-        private string GenerateExpectedOddNumbersOutput()
-        {
-            // Generates the expected output of odd numbers from 1 to 100
-            var expectedOutput = "";
-            for (int i = 1; i <= 100; i += 2)
-            {
-                expectedOutput += i + " ";
-            }
-            return expectedOutput.Trim(); // Trim any extra spaces
-        }
+
+
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
-            // Remove all whitespace and convert to lowercase
-            string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
-            string normalizedExpectedText = Regex.Replace(expectedText, @"[\s.,]+", "").ToLower();
-
-            // Create a regex pattern to allow any character for "ä", "ö", "a", and "o"
-            string pattern = Regex.Escape(normalizedExpectedText)
-                                  .Replace("ö", ".")  // Allow any character for "ö"
-                                  .Replace("ä", ".")  // Allow any character for "ä"
-                                  .Replace("a", ".")  // Allow any character for "a"
-                                  .Replace("o", ".");  // Allow any character for "o"
-
-            // Check if the line matches the pattern, ignoring case
-            return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
+            // Remove all whitespace from the line and the expected text
+            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
+            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
+            return normalizedLine.Contains(normalizedExpectedText);
         }
-
 
 
         private int CountWords(string line)
