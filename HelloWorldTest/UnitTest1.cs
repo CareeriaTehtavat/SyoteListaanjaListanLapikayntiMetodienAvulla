@@ -7,36 +7,37 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-        [Theory]
-        [InlineData("w careeria", "www.careeria.fi\n", 3)]
-        [InlineData("careeria", "careeria\n", 1)]
-        [InlineData("w google", "www.google.fi\n", 3)]
-        [Trait("TestGroup", "Test_UrlFormatting")]
 
-        public void Test_UrlFormatting(string inputText, string expectedOutput, int rowNum)
+        [Fact]
+        public void TestNumerolistaFirstFifthAndTenthPrintedCorrectly()
         {
-            var input = new StringReader($"{inputText}\n");
-            Console.SetIn(input);
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw); // Capture console output
 
-            var sw = new StringWriter();
-            Console.SetOut(sw);
+            // Simulate user input of 10 numbers
+            var simulatedInput = new StringReader("1\n2\n3\n4\n5\n6\n7\n8\n9\n10");
+            Console.SetIn(simulatedInput);
 
             // Act
-            HelloWorld.Program.Main(null);
+            HelloWorld.Program.Main(new string[0]); // Call Main method
 
-            // Assert
+            // Capture output and split it by line
             var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            // Assert: Get actual output and compare with expected output
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[rowNum]), $"Expected: {expectedOutput}, but got: {result[rowNum]}");
+            // Assert: Checking the correct numbers printed for 1st, 5th, and 10th
+            Assert.True(LineContainsIgnoreSpaces("Syota listalle lukuja, kunnes lista on valmis (10kpl)", result[0]));
+            Assert.True(LineContainsIgnoreSpaces("Listan ensimmainen, viides ja kymmenes luku:", result[1]));
+            Assert.Equal("1", result[2]);  // First number
+            Assert.Equal("5", result[3]);  // Fifth number
+            Assert.Equal("10", result[4]); // Tenth number
         }
 
-
-        private bool LineContainsIgnoreSpaces(string expectedText, string line)
+        private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace and convert to lowercase
-            string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
-            string normalizedExpectedText = Regex.Replace(expectedText, @"[\s.,]+", "").ToLower();
+            string normalizedLine = Regex.Replace(line, @"\s+", "").ToLower();
+            string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
 
             // Create a regex pattern to allow any character for "ä", "ö", "a", and "o"
             string pattern = Regex.Escape(normalizedExpectedText)
@@ -72,7 +73,11 @@ namespace HelloWorldTest
 
             return true;
         }
-
+        private string NormalizeOutput(string output)
+        {
+            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
+            return output.Replace("\r\n", "\n").Trim();
+        }
     }
 }
 
