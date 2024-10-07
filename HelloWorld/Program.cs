@@ -7,7 +7,7 @@
            
         }
 
-        public static void TulostaNeliö(int sivunPituus)
+        public static void TulostaNelio(int sivunPituus)
         {
          
         }

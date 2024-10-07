@@ -50,7 +50,7 @@ namespace HelloWorldTest
                 Console.SetOut(sw);
 
                 // Act
-                HelloWorld.Program.TulostaNeliö(sivunPituus);
+                HelloWorld.Program.TulostaNelio(sivunPituus);
 
                 // Assert
                 var result = sw.ToString();
