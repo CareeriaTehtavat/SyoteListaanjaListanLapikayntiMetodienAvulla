@@ -8,34 +8,32 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("pekka", "saara", "pauli",
-                    "Nimet pienilla alkukirjaimilla: pekka, saara, pauli\nNimet isoilla alkukirjaimilla: Pekka, Saara, Pauli\n")]
-        [InlineData("janne", "matti", "juho",
-                    "Nimet pienilla alkukirjaimilla: janne, matti, juho\nNimet isoilla alkukirjaimilla: Janne, Matti, Juho\n")]
-        [Trait("TestGroup", "Test_NameFormatting")]
-
-        public void Test_NameFormatting(string firstName, string secondName, string thirdName, string expectedOutput)
+        [InlineData("anton\nArtemii\n", "nntoa"
+            , "AArtemiiA")]
+        public void Test_SanaManipulations(string input, string expectedOutput, string sana2Expected)
         {
-            // Arrange
-            var input = new StringReader($"{firstName}\n{secondName}\n{thirdName}\n");
-            Console.SetIn(input);
+            // Arrange: Simulate console input
+            var inputReader = new StringReader(input);
+            Console.SetIn(inputReader);
 
             var sw = new StringWriter();
             Console.SetOut(sw);
 
-            // Act
+            // Act: Run the main program
             HelloWorld.Program.Main(null);
 
-            // Assert
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                         .Where(line => !string.IsNullOrWhiteSpace(line))
+                         .ToArray();
 
 
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[result.Length - 3] + "\n" + result[result.Length - 2]), "expected " + expectedOutput
-                + " got: " + result[result.Length - 3] + "\n" + result[result.Length - 2]);
-
-
-
+            // Assert: Verify output
+            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[4]), "Expected: " + expectedOutput
+                + " printed: " + result[4]);
+            Assert.True(LineContainsIgnoreSpaces(sana2Expected, result[6]), "Expected: " + expectedOutput
+                + " printed: " + result[6]);
         }
+
 
         private bool LineContainsIgnoreSpaces(string expectedText, string line)
         {

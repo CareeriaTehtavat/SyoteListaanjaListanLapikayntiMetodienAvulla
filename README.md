@@ -1,4 +1,4 @@
-# Pientä tekstiä ja isoja alkukirjaimia (kesken)
+# Sanojen pilkkomista
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
@@ -7,23 +7,24 @@
 - Muu extra johdatteleva materiaali ja huomiot
  
 ## TEHTÄVÄNANTO
-- Tee konsolisovellus. Käyttäjä syöttää sovellukseen 3 nimeä ja sovellus tulostaa jokaisen nimen syötön jälkeen nimen kokonaan pienillä kirjaimilla kirjoitettuna. 
-- Kun kaikki kolme nimeä on syötetty ja syötön yhteydessä tulostettu nimet pienillä kirjaimilla, muuta nimi muuttujien arvot isoiksi alkukirjaimiksi. Käytä char.ToUpper(string[0]) toimintoa, jolla saa ensimmäisen kirjaimen muutettua isoksi ja lisää loppuun nimen loppu osa, josta ensimmäinen kirjain leikattu string.Substring(1) toiminnolla
-
+- Laita konsoli tulostamaan Careeria kolmesti, siten että joka tulostuskerralla puuttuu kirjain. Ensimmäinen, viimeinen ja toinen kirjain. 
+- Laita konsoli pyytämään sanaa käyttäjältä ja sen jälkeen laita konsoli vaihtamaan sanan ensimmäisen ja viimeisen kirjaimen paikkaa ja tulostamaan sen. 
+- Nyt laita konsoli pyytämään uutta sanaa käyttäjältä ja laita se tulostamaan sen jälkeen kyseinen sana siten, että se tulostaa sanan ensimmäisen kirjaimen ennen ja jälkeen sanan. Esim: opiskelija = oopiskelijao
+- (Vinkki: substring)
 
 Esimerkkisuoritus:
 ```
-Anna ensimmäinen nimi:
-JUKKA
-Anna toinen nimi:
-Anton
-Anna kolmas nimi:
-pekka
-Nimet pienillä alkukirjaimilla: jukka, anton, pekka
-Nimet isoilla alkukirjaimilla: Jukka, Anton, Pekka
+areeria
+careeri
+creeria
+Anna sana:
+Aniina
+aniinA
+Anna uusi sana:
+Pekka
+PPekkaP
 
 ```
-
 
 > [!IMPORTANT]
 > Koodin kirjoittamisen johdanto
