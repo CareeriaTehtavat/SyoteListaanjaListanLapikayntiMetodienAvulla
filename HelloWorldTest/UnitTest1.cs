@@ -8,40 +8,54 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("15", "2", "5", "Suurin luku on: 15", "Pienin luku on: 2")]
-        [InlineData("2", "345", "1987", "Suurin luku on: 1987", "Pienin luku on: 2")]
-        [InlineData("33", "66", "12", "Suurin luku on: 66", "Pienin luku on: 12")]
-        [Trait("TestGroup", "Test_SanaManipulations")]
+        [InlineData("4\n", new[] { "Anna luku: Kertotaulu luvulle 4:", "1 * 4 = 4", "2 * 4 = 8", "3 * 4 = 12", "4 * 4 = 16", "5 * 4 = 20", "6 * 4 = 24", "7 * 4 = 28", "8 * 4 = 32", "9 * 4 = 36", "10 * 4 = 40" })]
+        [InlineData("3\n", new[] { "Anna luku: Kertotaulu luvulle 3:", "1 * 3 = 3", "2 * 3 = 6", "3 * 3 = 9", "4 * 3 = 12", "5 * 3 = 15", "6 * 3 = 18", "7 * 3 = 21", "8 * 3 = 24", "9 * 3 = 27", "10 * 3 = 30" })]
+        [Trait("TestGroup", "TestMainMethod_OutputForGivenInput")]
 
-        public void Test_SanaManipulations(string nimi, string harrastus, string kaupunki, string expectedOutput, string pieninOutput)
+        public void TestMainMethod_OutputForGivenInput(string userInput, string[] expectedOutput)
         {
-            // Arrange: Simulate console input
-            var inputReader = new StringReader(nimi + '\n' + kaupunki + "\n" + harrastus + "\n");
-            Console.SetIn(inputReader);
+            // Arrange
+            using var sw = new StringWriter();
+            Console.SetOut(sw); // Capture console output
 
-            var sw = new StringWriter();
-            Console.SetOut(sw);
+            using var sr = new StringReader(userInput);
+            Console.SetIn(sr); // Simulate user input
 
-            // Act: Run the main program
-            HelloWorld.Program.Main(null);
+            // Act
+            HelloWorld.Program.Main(new string[0]);
 
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                         .Where(line => !string.IsNullOrWhiteSpace(line))
-                         .ToArray();
+            // Get the console output, split by new lines, and remove empty or whitespace lines
+            var result = sw.ToString()
+                            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                            .Where(line => !string.IsNullOrWhiteSpace(line)) // Remove any blank lines
+                            .ToArray();
 
+            // Ensure the number of lines matches
+            //Assert.Equal(expectedOutput.Length, result.Length);
 
-            // Assert: Verify output
-            Assert.True(LineContainsIgnoreSpaces(expectedOutput, result[3]), "Expected: " + expectedOutput
-                + " printed: " + result[3]);
-            Assert.True(LineContainsIgnoreSpaces(pieninOutput, result[4]), "Expected: " + pieninOutput
-                + " printed: " + result[4]);
-
+            // Compare each row of the expected and actual output
+            for (int i = 0; i < expectedOutput.Length; i++)
+            {
+                Assert.True(LineContainsIgnoreSpaces(result[i], expectedOutput[i]),
+                    $"Expected line: '{expectedOutput[i]}', but got: '{result[i]}'");
+            }
         }
 
+        [Theory]
+        [InlineData(3, 4, "3 * 4 = 12")]
+        [InlineData(5, 6, "5 * 6 = 30")]
+        [InlineData(10, 10, "10 * 10 = 100")]
+        [Trait("TestGroup", "TestKertolaskukaavalla")]
 
+        public void TestKertolaskukaavalla(int luku1, int luku2, string expectedOutput)
+        {
+            // Act
+            string result = HelloWorld.Program.Kertolaskukaavalla(luku1, luku2);
 
-
-        private bool LineContainsIgnoreSpaces(string expectedText, string line)
+            // Assert
+            Assert.True(LineContainsIgnoreSpaces(result, expectedOutput), $"Expected:\n{expectedOutput}\nBut got:\n{result}");
+        }
+        private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
             // Remove all whitespace and convert to lowercase
             string normalizedLine = Regex.Replace(line, @"[\s.,]+", "").ToLower();
@@ -57,6 +71,7 @@ namespace HelloWorldTest
             // Check if the line matches the pattern, ignoring case
             return Regex.IsMatch(normalizedLine, pattern, RegexOptions.IgnoreCase);
         }
+
 
 
         private int CountWords(string line)
@@ -81,7 +96,10 @@ namespace HelloWorldTest
 
             return true;
         }
-
+        private string NormalizeOutput(string output)
+        {
+            // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
+            return output.Replace("\r\n", "\n").Trim();
+        }
     }
 }
-
