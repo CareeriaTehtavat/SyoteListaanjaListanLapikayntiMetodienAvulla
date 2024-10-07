@@ -7,7 +7,6 @@ namespace HelloWorldTest
 {
     public class UnitTest1
     {
-
         [Fact]
         [Trait("TestGroup", "List")]
         public void List()
@@ -17,21 +16,26 @@ namespace HelloWorldTest
             Console.SetOut(sw); // Capture console output
 
             // Act
-            HelloWorld.Program.Main(new string[0]); // Assuming the game list logic is in Main
+            HelloWorld.Program.Main(new string[0]); // Assuming the list logic is in Main
 
             // Get the console output
-            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
+            var result = sw.ToString();
+
+            // Assert that the output is not empty and contains text
+            Assert.False(string.IsNullOrWhiteSpace(result), "Expected some text to be printed, but output was empty or whitespace only.");
+
+            var lines = result.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                              .Where(line => !string.IsNullOrWhiteSpace(line)).ToArray();
 
             // We assume that the first half of the list is printed in original order, followed by the reverse
-            int listEnd = result.Length / 2; // Since it's printed twice, the mid-point splits them
+            int listEnd = lines.Length / 2; // Since it's printed twice, the mid-point splits them
 
-            var firstHalf = result.Take(listEnd).ToArray(); // The list in the original order
-            var secondHalf = result.Skip(listEnd).Take(listEnd).ToArray(); // The list in reverse order
+            var firstHalf = lines.Take(listEnd).ToArray(); // The list in the original order
+            var secondHalf = lines.Skip(listEnd).Take(listEnd).ToArray(); // The list in reverse order
 
             // Assert that the second half is the reverse of the first half
             Assert.Equal(firstHalf.Reverse(), secondHalf);
         }
-
 
         private bool LineContainsIgnoreSpaces(string line, string expectedText)
         {
@@ -40,7 +44,6 @@ namespace HelloWorldTest
             string normalizedExpectedText = Regex.Replace(expectedText, @"\s+", "").ToLower();
             return normalizedLine.Contains(normalizedExpectedText);
         }
-
 
         private int CountWords(string line)
         {
@@ -64,6 +67,7 @@ namespace HelloWorldTest
 
             return true;
         }
+
         private string NormalizeOutput(string output)
         {
             // Normalize line endings to Unix-style '\n' and trim any extra spaces or newlines
