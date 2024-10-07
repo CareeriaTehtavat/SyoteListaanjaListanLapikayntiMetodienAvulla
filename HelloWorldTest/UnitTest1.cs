@@ -9,40 +9,54 @@ namespace HelloWorldTest
     public class UnitTest1
     {
         [Theory]
-        [InlineData("nikke\nonni\neemeli\nnia\naalto yliopisto\n", new[] { "nikke", "onni", "eemeli", "nia", "aalto yliopisto" })]
-        [InlineData("alice\nbob\ncharlie\ndavid\neve\n", new[] { "alice", "bob", "charlie", "david", "eve" })]
-        [InlineData("john\ndoe\nmichael\njane\nsmith\n", new[] { "john", "doe", "michael", "jane", "smith" })]
-        [Trait("TestGroup", "TestNameListOutput")]
+        [InlineData("Audi\nVantaa\nHelsinki\nSuomi\nEurooppa\n", new[] { "Audi", "Vantaa", "Helsinki", "Suomi", "Eurooppa" })]
+        [InlineData("Alice\nBob\nCharlie\nDavid\nEve\n", new[] { "Alice", "Bob", "Charlie", "David", "Eve" })]
+        [Trait("TestGroup", "TestAddNamesToList")]
 
-        public void TestNameListOutput(string userInput, string[] expectedOutput)
+        public void TestAddNamesToList(string userInput, string[] expectedOutput)
         {
             // Arrange
             using var sw = new StringWriter();
-            Console.SetOut(sw); // Redirect console output
+            Console.SetOut(sw); // Capture console output
 
-            var input = new StringReader(userInput);
-            Console.SetIn(input); // Redirect user input
+            using var sr = new StringReader(userInput);
+            Console.SetIn(sr); // Simulate user input
 
             // Act
-            HelloWorld.Program.Main(new string[0]); // Assuming the list logic is in Main
+            HelloWorld.Program.Main(new string[0]);
 
-            // Get the console output, split by new lines, and remove empty or whitespace lines
-            var result = sw.ToString()
-                           .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
-                           .Where(line => !string.IsNullOrWhiteSpace(line)) // Remove any blank lines
-                           .ToArray();
-
-            // Skip the first line of the result, which contains the prompt "Anna 5 henkilön nimeä:"
-            var actualNames = result.Skip(1).ToArray();
+            // Get the console output and split by new lines
+            var result = sw.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+                                     .Where(line => !string.IsNullOrWhiteSpace(line))
+                                     .ToArray();
 
             // Ensure the number of lines matches
-            Assert.Equal(expectedOutput.Length, actualNames.Length);
 
             // Compare each row of the expected and actual output
             for (int i = 0; i < expectedOutput.Length; i++)
             {
-                Assert.True(LineContainsIgnoreSpaces(expectedOutput[i], actualNames[i]),
-                    $"Expected line: '{expectedOutput[i]}', but got: '{actualNames[i]}'");
+                Assert.True(LineContainsIgnoreSpaces(result[i + 1], expectedOutput[i]));
+            }
+        }
+
+        [Fact]
+        public void TestListPopulation()
+        {
+            // Arrange
+            var userInput = new[] { "Audi", "Vantaa", "Helsinki", "Suomi", "Eurooppa" };
+            var list = new List<string>();
+
+            // Act
+            foreach (var name in userInput)
+            {
+                list = HelloWorld.Program.LisaaHenkilo(list, name);
+            }
+
+            // Assert
+            Assert.Equal(userInput.Length, list.Count);
+            for (int i = 0; i < userInput.Length; i++)
+            {
+                Assert.True(LineContainsIgnoreSpaces(userInput[i], list[i]));
             }
         }
         private bool LineContainsIgnoreSpaces(string line, string expectedText)

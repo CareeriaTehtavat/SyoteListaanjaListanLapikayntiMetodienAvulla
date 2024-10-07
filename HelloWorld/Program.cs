@@ -7,7 +7,13 @@ namespace HelloWorld
     {
         public static void Main(string[] args)
         {
-           
+          
+        }
+
+        public static List<string> LisaaHenkilo(List<string> lista, string henkilönimi)
+        {
+
+            return new List<string>();
         }
     }
 }
