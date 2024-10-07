@@ -1,34 +1,33 @@
-# Peruslaskuja numerolistan elementeillä (double/float)
+# Pientä tekstiä ja isoja alkukirjaimia (kesken)
 
 ## JOHDANTO
 - Muista aina hyödyntää jo aiemmin oppimaasi!
-- Katso apuja myös edellisistä tehtävistä. 
+- Katso apuja myös edellisistä tehtävistä.
+- Katso myös ensin if-else kirjallinen materiaali!
+- Muu extra johdatteleva materiaali ja huomiot
  
 ## TEHTÄVÄNANTO
-- Tee desimaaliluvuista koostuva numerolista, johon laitat tallettumaan ReadLine toiminnolla kymmenen desimaalilukua (katso edellinen numerolistatehtävä, tee tämä vain double tai float listana)
-- Tee seuraavat tulosteet WriteLine toiminnon avulla, saat käyttää apumuuttujia tai laittaa sovelluksesi laskemaan suoraan WriteLinen sisällä. 
-- Laske listan indeksilukujen 3 ja 5 summa
-- Laske listan indeksilukujen 1 ja 8 erotus
-- Laske listan indeksilukujen 0 ja 9 tulo
-- Laske listan indeksilukujen 2 ja 7 osamäärä
-- Tulosta konsoliin edellä mainitut laskutoimet ja niiden tulokset
-- Tulosta konsoliin vielä erikseen luvut, joita ei käytetty edellä mainituissa laskutoimituksissa
-- Esimerkkituloste alla:
+- Tee konsolisovellus. Käyttäjä syöttää sovellukseen 3 nimeä ja sovellus tulostaa jokaisen nimen syötön jälkeen nimen kokonaan pienillä kirjaimilla kirjoitettuna. 
+- Kun kaikki kolme nimeä on syötetty ja syötön yhteydessä tulostettu nimet pienillä kirjaimilla, muuta nimi muuttujien arvot isoiksi alkukirjaimiksi. Käytä char.ToUpper(string[0]) toimintoa, jolla saa ensimmäisen kirjaimen muutettua isoksi ja lisää loppuun nimen loppu osa, josta ensimmäinen kirjain leikattu string.Substring(1) toiminnolla
+
+
+Esimerkkisuoritus:
+```
+Anna ensimmäinen nimi:
+JUKKA
+Anna toinen nimi:
+Anton
+Anna kolmas nimi:
+pekka
+Nimet pienillä alkukirjaimilla: jukka, anton, pekka
+Nimet isoilla alkukirjaimilla: Jukka, Anton, Pekka
 
 ```
-Syötä listalle desimaalilukuja, kunnes lista on valmis (10kpl)
-5,7
-9,8
-0,8
-4,6
-1,6
-7,9
-3,7
-2,1
-1,0
-6,6
-Indeksisijainnin 3 ja 5 lukujen summa: 4,6 + 7,9 = 12,5
-Indeksisijainnin 1 ja 8 lukujen erotus: 9,8 - 1 = 8,8
-Indeksisijainnin 0 ja 9 lukujen tulo: 5,7 * 6,6 = 37,62
-Indeksisijainnin 2 ja 7 lukujen osamäärä: 0,8 / 2,1 = 0,38095238095238093
-Listan loput luvut ovat indeksisijainnissa 4 ja 6: 1,6 ja 3,7
+
+
+> [!IMPORTANT]
+> Koodin kirjoittamisen johdanto
+1. Kloonaa projekti omalle koneellesi.
+2. Avaa `ConsoleApp.sln`.
+3. Solution-ikkunasta valitse "ConsoleApp".
+4. Pääkoodi löytyy `Program.cs`-tiedostosta. Jos tarvitset, luo uudet itemit `ConsoleApp`-projektiin.
