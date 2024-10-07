@@ -10,6 +10,8 @@ namespace HelloWorldTest
         [Theory]
         [InlineData("anton\nArtemii\n", "nntoa"
             , "AArtemiiA")]
+        [Trait("TestGroup", "Test_SanaManipulations")]
+
         public void Test_SanaManipulations(string input, string expectedOutput, string sana2Expected)
         {
             // Arrange: Simulate console input
