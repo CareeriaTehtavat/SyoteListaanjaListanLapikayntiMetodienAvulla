@@ -7,11 +7,15 @@
 - Muu extra johdatteleva materiaali ja huomiot
  
 ## TEHTÄVÄNANTO
-- MUOKKAA Aiemman osion henkilöitä listaavaa tehtävää siten, että se käyttää metodia. Alla aiemman tehtävän ohjeet:
-- Laita konsolisovellus pyytämään käyttäjältä henkilöiden nimiä, jonka jälkeen henkilön nimi tallennetaan List<string> henkilöt listaan. 
-- Tip: for-silmukka, jossa on 5 silmukkan iteraatiota (läpikäyntiä) , silmukan sisällä kysytään käyttäjän syöte ja henkilö nimi tallennetaan listaan (henkilöt.Add(Console.ReadLine)). -> Muokkaa tämä toiminto metodiin, eli metodi, joka palauttaa uuden listan uudella henkilöllä -> static List<string> LisääHenkilö() -> muista paluttaa (return) uusittu lista lopuksi
-- Kun listalla on 5 henkilö, sovellus tulostaa listan henkilöistä konsoliin. (foreach) -> Muokkaa tämä metodiin. Kutsu siis metodia (tulostamaan henkilöt listalta), jonka sisällä foreach on.
-- Metodi on jo olemassa, sen pitää muokata,että se toimi oikein - Metodin nimi "LisääHenkilö".
+- Kysy käyttäjältä viisi nimeä.
+    - Käytä for-silmukkaa, joka toistuu viisi kertaa.
+    - Jokaisella kierroksella pyydä käyttäjää syöttämään nimi.
+- Lisää nimet listaan käyttäen LisaaHenkilo-metodia.
+    - Tämä metodi lisää käyttäjän syöttämän nimen listaan ja palauttaa päivitetyn listan.
+- Tulosta kaikki nimet konsoliin .
+    - Käy läpi kaikki listan nimet ja tulostaa ne käyttäjälle.
+- Jaa ohjelman toiminnallisuus metodeihin:
+    - LisaaHenkilo: Lisää yhden nimen listaan ja palauttaa päivitetyn listan.
 
 
 Esimerkkisuoritus:
